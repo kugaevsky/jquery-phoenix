@@ -1,0 +1,162 @@
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Phoenix :: jQuery plugin to store form fields values via Web Storage API</title>
+    <script src="http://code.jquery.com/jquery-2.0.3.min.js" type="text/javascript"></script>
+    <script src="jquery.phoenix.js" type="text/javascript"></script>
+    <link href="http://cdn.jsdelivr.net/foundation/5.0.2/css/normalize.css" rel="stylesheet" />
+    <link href="http://cdn.jsdelivr.net/foundation/5.0.2/css/foundation.min.css" rel="stylesheet" />
+    <link href="https://raw.github.com/simonwhitaker/github-fork-ribbon-css/master/gh-fork-ribbon.css" rel="stylesheet" />
+    <style type="text/css">
+      code {
+        font-weight: lighter;
+        color: #888888;
+      }
+      
+      textarea {
+        height: 6rem;
+      }
+      
+      pre {
+        height: 270px;
+        overflow: hidden;
+      }
+      
+      .inline-list {
+        font-size: 80%;
+        color: #666666;
+        margin-bottom: 0;
+      }
+      
+      .panel {
+        padding-bottom: 0.75rem;
+        margin-bottom: 0.5rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="github-fork-ribbon-wrapper right">
+      <div class="github-fork-ribbon">
+        <a href="https://github.com/kugaevsky/jquery-phoenix/">Fork me on GitHub</a>
+      </div>
+    </div>
+    <div class="container">
+      <div class="row">
+        <div class="small-12 columns">
+          <br />
+          <h2>
+            Phoenix <small>— jQuery plugin to save form fields values</small>
+          </h2>
+          <br />
+        </div>
+      </div>
+      <div class="row">
+        <div class="small-12 large-7 columns">
+          <div class="panel">
+            <form id="my-form">
+              <div class="inputs">
+                <div>
+                  <input class="phoenix-input" type="text" value="First form field" />
+                </div>
+                <div>
+                  <textarea class="phoenix-input">A long time ago, in a galaxy far, far away.... </textarea>
+                </div>
+              </div>
+            </form>
+            <ul class="button-group">
+              <li>
+                <a class="button small success" data-phoenix-action="start" href="#">Start</a>
+              </li>
+              <li>
+                <a class="button small alert" data-phoenix-action="stop" href="#">Stop</a>
+              </li>
+              <li>
+                <a class="button small" data-phoenix-action="load" href="#">Load</a>
+              </li>
+              <li>
+                <a class="button small" data-phoenix-action="save" href="#">Save</a>
+              </li>
+              <li>
+                <a class="button small alert" data-phoenix-action="remove" href="#">Remove</a>
+              </li>
+            </ul>
+            <p>
+              Type something, try to reload page, play with buttons, close browser – do what you want. 
+            </p>
+            <ul class="inline-list">
+              <li>
+                <a href="https://github.com/kugaevsky/jquery-phoenix/">GitHub</a>
+              </li>
+              <li>
+                |
+              </li>
+              <li>
+                <a href="https://github.com/kugaevsky/jquery-phoenix/blob/master/README.md">Docs</a>
+              </li>
+              <li>
+                |
+              </li>
+              <li>
+                <a href="https://github.com/kugaevsky/jquery-phoenix/blob/master/LICENSE">License</a>
+              </li>
+              <li>
+                |
+              </li>
+              <li>
+                <a href="https://github.com/kugaevsky/jquery-phoenix/issues">Issues</a>
+              </li>
+              <li>
+                |
+              </li>
+              <li>
+                <a href="https://github.com/kugaevsky/jquery-phoenix/graphs/contributors">Contributors</a>
+              </li>
+            </ul>
+          </div>
+          <small><nobr>2013 ©  <a href="http://kugaevsky.ru">Nick Kugaevsky</a> </nobr></small>
+        </div>
+        <div class="small-12 large-5 columns">
+          <div class="panel callout">
+            <h4 class="subheader">
+              Events log
+            </h4>
+            <pre><code></code></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+      (function() {
+        $('.phoenix-input').bind('phnx.loaded', function(e) {
+          return $('.callout pre code').prepend("Data loaded\n");
+        });
+      
+        $('.phoenix-input').bind('phnx.saved', function(e) {
+          return $('.callout pre code').prepend("Data saved\n");
+        });
+      
+        $('.phoenix-input').bind('phnx.removed', function(e) {
+          return $('.callout pre code').prepend("Data removed\n");
+        });
+      
+        $('.phoenix-input').bind('phnx.stopped', function(e) {
+          return $('.callout pre code').prepend("Save timer stopped\n");
+        });
+      
+        $('.phoenix-input').bind('phnx.started', function(e) {
+          return $('.callout pre code').prepend("Save timer started\n");
+        });
+      
+        $('.phoenix-input').phoenix();
+      
+        $('[data-phoenix-action]').on('click', function(e) {
+          $('.phoenix-input').phoenix($(this).data('phoenix-action'));
+          e.preventDefault();
+          return e.stopPropagation();
+        });
+      
+      }).call(this);
+      
+    </script>
+  </body>
+</html>
