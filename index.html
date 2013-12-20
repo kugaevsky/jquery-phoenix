@@ -12,22 +12,22 @@
         font-weight: lighter;
         color: #888888;
       }
-      
+
       textarea {
         height: 6rem;
       }
-      
+
       pre {
         height: 270px;
         overflow: hidden;
       }
-      
+
       .inline-list {
         font-size: 80%;
         color: #666666;
         margin-bottom: 0;
       }
-      
+
       .panel {
         padding-bottom: 0.75rem;
       }
@@ -79,7 +79,7 @@
                 </li>
               </ul>
               <p>
-                Type something, try to reload page, play with buttons, close browser – do what you want. 
+                Type something, try to reload page, play with buttons, close browser – do what you want.
               </p>
               <ul class="inline-list">
                 <li>
@@ -122,33 +122,33 @@
         $('.phoenix-input').bind('phnx.loaded', function(e) {
           return $('.callout pre code').prepend("Data loaded\n");
         });
-      
+
         $('.phoenix-input').bind('phnx.saved', function(e) {
           return $('.callout pre code').prepend("Data saved\n");
         });
-      
+
         $('.phoenix-input').bind('phnx.removed', function(e) {
           return $('.callout pre code').prepend("Data removed\n");
         });
-      
+
         $('.phoenix-input').bind('phnx.stopped', function(e) {
           return $('.callout pre code').prepend("Save timer stopped\n");
         });
-      
+
         $('.phoenix-input').bind('phnx.started', function(e) {
           return $('.callout pre code').prepend("Save timer started\n");
         });
-      
+
         $('.phoenix-input').phoenix();
-      
+
         $('[data-phoenix-action]').on('click', function(e) {
           $('.phoenix-input').phoenix($(this).data('phoenix-action'));
           e.preventDefault();
           return e.stopPropagation();
         });
-      
+
       }).call(this);
-      
+
     </script>
   </body>
 </html>
