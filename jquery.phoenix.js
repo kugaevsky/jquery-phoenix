@@ -5,7 +5,8 @@
     defaults = {
       namespace: 'phoenixStorage',
       maxItems: 50,
-      saveInterval: 1000
+      saveInterval: 1000,
+      clearOnSubmit: false
     };
     saveTimers = [];
     Phoenix = (function() {
@@ -108,7 +109,12 @@
             return this.save();
           default:
             this.load();
-            return this.start();
+            this.start();
+            if (this.options.clearOnSubmit) {
+              return $(this.options.clearOnSubmit).submit(function(e) {
+                return this.remove;
+              });
+            }
         }
       };
 

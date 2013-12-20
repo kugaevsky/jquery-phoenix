@@ -15,8 +15,8 @@
 # Phoenix is a simple jQuery plugin to make your form
 # input safe (I mean save) in your browser's local storage.
 #
-# @version 0.0.1
-# @url github.com/kugaevsky/phoenix
+# @version 1.0.0
+# @url github.com/kugaevsky/jquery-phoenix
 # ---------------------
 #
 # FEATURES:
@@ -32,6 +32,7 @@
     namespace: 'phoenixStorage'
     maxItems: 50
     saveInterval: 1000
+    clearOnSubmit: false
   saveTimers = []
 
   class Phoenix
@@ -104,6 +105,7 @@
         else
           @load()
           @start()
+          $(@options.clearOnSubmit).submit((e) -> @remove) if @options.clearOnSubmit
 
   supports_html5_storage = ->
     try

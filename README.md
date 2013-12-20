@@ -1,5 +1,5 @@
 # Phoenix
-#### jQuery plugin to save form fields values to localStorage
+#### jQuery plugin to save form fields values to Local Storage via HMTL5 Web Storage API
 
 Lost connections, crashed browsers, broken validations – all these shit loose
 forms data you've filled in with love and care.
@@ -27,7 +27,7 @@ It's jQuery plugin so it requires [jQuery](http://jquery.com/).
 
 Something like this
 
-    <form id='my-form'>
+    <form id='stored-form'>
       <input type="text" class="phoenix-input" />
       <textarea type="text" class="phoenix-input"></textarea>
     </div>
@@ -50,13 +50,19 @@ Phoenix provides simple but flexible API.
 
 You can pass an options object on phoenix initialization.
 
-`$('.phoenix-input').phoenix({namespace: 'phoenixStorage', maxItems: 50, saveInterval: 1000})`
+    $('.phoenix-input').phoenix({
+        namespace: 'phoenixStorage',
+        maxItems: 50,
+        saveInterval: 1000,
+        clearOnSubmit: '#stored-form'
+      })
 
 Possible options are:
 
-* `namespace` – localStorage namespace (if you don't like default) – default: `phoenixStorage`,
-* `maxItems` – max items to store (every form field is an item) – default: `50`,
-* `saveInterval` – how often to save field values to localStorage (milliseconds) – default: `1000`
+* `namespace` – localStorage namespace (if you don't like default) – *string*: `phoenixStorage`,
+* `maxItems` – max items to store (every form field is an item) – *integer*: `50`,
+* `saveInterval` – how often to save field values to localStorage (milliseconds) – *integer*: `1000`
+* `clearOnSubmit` – form selector (when you submit this form phoenix will remove its stored items) – *string*: false
 
 ### Methods
 
