@@ -21,9 +21,9 @@ It's jQuery plugin so it requires [jQuery](http://jquery.com/).
 ## Usage
 
 1. Require jQuery
-2. Require jquery.phoenix.js
-3. `$(selector).phoenix()` – cast the magic
-4. `$(selector).phoenix('remove')` – clear storage on successful form submission (or any other event your like more)
+2. Require [jquery.phoenix.js](https://raw.github.com/kugaevsky/jquery-phoenix/master/jquery.phoenix.js) or its [minified version](https://raw.github.com/kugaevsky/jquery-phoenix/master/jquery.phoenix.min.js)
+3. `$('input').phoenix()` – cast the magic
+4. `$('input').phoenix('remove')` – clear storage on successful form submission (or any other event your like more)
 
 Something like this
 
@@ -75,7 +75,7 @@ Call method with `$(selector).phoenix('methodName')`, where `methodName` is one 
 * `save` – save value from field to stored item
 * `remove` – stop saving timer and remove stored item from localStorage
 
-**NB** Phoenix doesn't remove stored item from localStorage by itself. So don't forget to call `remove` on successful form submission or any other event when you don't need filled in form field values anymore.
+**NB** Phoenix doesn't remove stored item from localStorage by itself. So don't forget to call `remove` event when you don't need filled in form field values anymore or use `clearOnSubmit` option with form id.
 
 ### Events
 
@@ -94,6 +94,10 @@ Events naming is very obvious, so try them out
 * phnx.saved
 * phnx.removed
 
+### jQuery Plugin registry
+
+http://plugins.jquery.com/phoenix/
+
 ### License
 
 Distributed under [MIT license](https://github.com/kugaevsky/jquery-phoenix/blob/master/LICENSE)
@@ -101,3 +105,4 @@ Distributed under [MIT license](https://github.com/kugaevsky/jquery-phoenix/blob
 ### Contributing
 
 Feel free to create pull request of your changes. But only in [CoffeeScript](http://jashkenas.github.io/coffee-script/).
+[All contributors](https://github.com/kugaevsky/jquery-phoenix/graphs/contributors).
