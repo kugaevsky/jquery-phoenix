@@ -93,6 +93,7 @@
       };
 
       Phoenix.prototype.init = function() {
+        var self;
         if (localStorage[this.storageIndexKey] === void 0) {
           localStorage[this.storageIndexKey] = "[]";
         }
@@ -110,9 +111,10 @@
           default:
             this.load();
             this.start();
+            self = this;
             if (this.options.clearOnSubmit) {
               return $(this.options.clearOnSubmit).submit(function(e) {
-                return this.remove;
+                return self.remove();
               });
             }
         }

@@ -105,7 +105,8 @@
         else
           @load()
           @start()
-          $(@options.clearOnSubmit).submit((e) -> @remove) if @options.clearOnSubmit
+          self = @
+          $(@options.clearOnSubmit).submit((e) -> self.remove()) if @options.clearOnSubmit
 
   supports_html5_storage = ->
     try
