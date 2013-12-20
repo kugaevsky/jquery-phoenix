@@ -1,10 +1,13 @@
 # Phoenix [![Code Climate](https://codeclimate.com/github/kugaevsky/jquery-phoenix.png)](https://codeclimate.com/github/kugaevsky/jquery-phoenix)
 #### jQuery plugin to save form fields values to Local Storage via HMTL5 Web Storage API
 
-Lost connections, crashed browsers, broken validations – all these shit loose
-forms data you've filled in with love and care.
+Lost connections, crashed browsers, broken validations – all these
+shit loose forms data you've filled in with love and care.
 
-**[Phoenix](https://github.com/kugaevsky/jquery-phoenix/)** keeps bad things away from your forms. It saves form fields values to your browser Local Storage using HTML5 Web Storage API.
+**[Phoenix](https://github.com/kugaevsky/jquery-phoenix/)** keeps
+bad things away from your forms. It is very tiny – 2.6Kb (<1Kb gziped),
+but powerful. Phoenix saves form fields values to your browser
+Local Storage using HTML5 Web Storage API.
 
 Enough words! Take a look at
 
