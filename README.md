@@ -1,4 +1,4 @@
-# Phoenix
+# Phoenix [![Code Climate](https://codeclimate.com/github/kugaevsky/jquery-phoenix.png)](https://codeclimate.com/github/kugaevsky/jquery-phoenix)
 #### jQuery plugin to save form fields values to Local Storage via HMTL5 Web Storage API
 
 Lost connections, crashed browsers, broken validations – all these shit loose
