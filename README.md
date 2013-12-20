@@ -4,7 +4,7 @@
 Lost connections, crashed browsers, broken validations – all these shit loose
 forms data you've filled in with love and care.
 
-**[Phoenix](https://github.com/kugaevsky/jquery-phoenix/)** keeps bad things away from your forms. It saves form fields values to localStorage using HTML5 Web Storage API.
+**[Phoenix](https://github.com/kugaevsky/jquery-phoenix/)** keeps bad things away from your forms. It saves form fields values to your browser Local Storage using HTML5 Web Storage API.
 
 Enough words! Take a look at
 
