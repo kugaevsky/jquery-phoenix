@@ -36,15 +36,16 @@
   saveTimers = []
 
   class Phoenix
-    constructor: (@element, @index, options, @action) ->
+    constructor: (@element, option) ->
       @_defaults    = defaults
       @_name        = pluginName
 
       @$element     = $(@element)
-      @options      = $.extend {}, defaults, options
+      @options      = $.extend {}, defaults, option if typeof option is 'object'
+      @action       = option if typeof option is 'string'
       @uri          = window.location.host + window.location.pathname
-      @storageKey   = @options.namespace + '.' + @uri + '.' + @index.toString()
-      @storageIndexKey = @options.namespace + '.index.' + window.location.host
+      @storageKey   = [ @options.namespace, @uri, @element.tagName, @element.id, @element.name ].join('.')
+      @storageIndexKey = [ @options.namespace, 'index', window.location.host ].join('.')
 
       @init()
 
@@ -117,7 +118,5 @@
   $.fn[pluginName] = (option) ->
     pluginID = "plugin_#{pluginName}"
     @each (i) ->
-      options = option if typeof option == 'object'
-      action  = option if typeof option == 'string'
-      $.data @, pluginID, new Phoenix(@, i, options, action) unless $.data(@, pluginID) && !supports_html5_storage()
+      $.data @, pluginID, new Phoenix(@, option) unless $.data(@, pluginID) && !supports_html5_storage()
 )(jQuery, window, document)

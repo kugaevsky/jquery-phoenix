@@ -10,17 +10,20 @@
     };
     saveTimers = [];
     Phoenix = (function() {
-      function Phoenix(element, index, options, action) {
+      function Phoenix(element, option) {
         this.element = element;
-        this.index = index;
-        this.action = action;
         this._defaults = defaults;
         this._name = pluginName;
         this.$element = $(this.element);
-        this.options = $.extend({}, defaults, options);
+        if (typeof option === 'object') {
+          this.options = $.extend({}, defaults, option);
+        }
+        if (typeof option === 'string') {
+          this.action = option;
+        }
         this.uri = window.location.host + window.location.pathname;
-        this.storageKey = this.options.namespace + '.' + this.uri + '.' + this.index.toString();
-        this.storageIndexKey = this.options.namespace + '.index.' + window.location.host;
+        this.storageKey = [this.options.namespace, this.uri, this.element.tagName, this.element.id, this.element.name].join('.');
+        this.storageIndexKey = [this.options.namespace, 'index', window.location.host].join('.');
         this.init();
       }
 
@@ -136,15 +139,8 @@
       var pluginID;
       pluginID = "plugin_" + pluginName;
       return this.each(function(i) {
-        var action, options;
-        if (typeof option === 'object') {
-          options = option;
-        }
-        if (typeof option === 'string') {
-          action = option;
-        }
         if (!($.data(this, pluginID) && !supports_html5_storage())) {
-          return $.data(this, pluginID, new Phoenix(this, i, options, action));
+          return $.data(this, pluginID, new Phoenix(this, option));
         }
       });
     };
