@@ -5,15 +5,15 @@ Lost connections, crashed browsers, broken validations – all these
 shit loose forms data you've filled in with love and care.
 
 **[Phoenix](https://github.com/kugaevsky/jquery-phoenix/)** keeps
-bad things away from your forms. It is very tiny – 2.6Kb (<1Kb gziped),
-but powerful. Phoenix saves form fields values to your browser
-Local Storage using HTML5 Web Storage API.
+bad things away from your forms. It is very tiny – 3Kb (1Kb gziped),
+but powerful. Phoenix saves form fields values, checkboxes and radio button states
+to your browser Local Storage using HTML5 Web Storage API.
 
 Enough words! Take a look at
 
 ## Demo
 
-[![Phoenix Demo](http://storage.kugaevsky.ru/images/Phoenix__jQuery_plugin_to_store_form_fields_values_via_Web_Storage_API_20131220_222119.png)](http://kugaevsky.github.io/jquery-phoenix/)
+[![Phoenix Demo](http://storage.kugaevsky.ru/images/Phoenix__jQuery_plugin_to_store_form_fields_values_via_Web_Storage_API_20131221_170356.png)](http://kugaevsky.github.io/jquery-phoenix/)
 
 [Try the DEMO!](http://kugaevsky.github.io/jquery-phoenix/)
 
