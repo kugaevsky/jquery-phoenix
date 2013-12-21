@@ -15,9 +15,7 @@
         this._defaults = defaults;
         this._name = pluginName;
         this.$element = $(this.element);
-        if (typeof option === 'object') {
-          this.options = $.extend({}, defaults, option);
-        }
+        this.options = $.extend({}, defaults, (typeof option === 'object' ? option : void 0));
         if (typeof option === 'string') {
           this.action = option;
         }
@@ -59,20 +57,23 @@
         var e, savedValue;
         savedValue = localStorage[this.storageKey];
         if (savedValue != null) {
-          this.element.value = localStorage[this.storageKey];
+          if (this.$element.is(":checkbox")) {
+            this.element.checked = JSON.parse(savedValue);
+          } else {
+            this.element.value = savedValue;
+          }
           e = $.Event('phnx.loaded');
           return this.$element.trigger(e);
         }
       };
 
       Phoenix.prototype.save = function() {
-        var e;
-        if (this.element.value != null) {
-          localStorage[this.storageKey] = this.element.value;
-          e = $.Event('phnx.saved');
-          this.$element.trigger(e);
-          return this.updateIndex();
-        }
+        var e, value;
+        value = this.$element.is(":checkbox") ? this.element.checked : this.element.value;
+        localStorage[this.storageKey] = value;
+        e = $.Event('phnx.saved');
+        this.$element.trigger(e);
+        return this.updateIndex();
       };
 
       Phoenix.prototype.start = function() {

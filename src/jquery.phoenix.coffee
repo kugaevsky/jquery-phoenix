@@ -41,7 +41,7 @@
       @_name        = pluginName
 
       @$element     = $(@element)
-      @options      = $.extend {}, defaults, option if typeof option is 'object'
+      @options      = $.extend {}, defaults, (option if typeof option is 'object')
       @action       = option if typeof option is 'string'
       @uri          = window.location.host + window.location.pathname
       @storageKey   = [ @options.namespace, @uri, @element.tagName, @element.id, @element.name ].join('.')
@@ -72,16 +72,22 @@
     load: ->
       savedValue = localStorage[@storageKey]
       if savedValue?
-        @element.value = localStorage[@storageKey]
+        if @$element.is(":checkbox")
+          @element.checked = JSON.parse savedValue
+        else
+          @element.value = savedValue
         e = $.Event('phnx.loaded')
         @$element.trigger(e)
 
     save: ->
-      if @element.value?
-        localStorage[@storageKey] = @element.value
-        e = $.Event('phnx.saved')
-        @$element.trigger(e)
-        @updateIndex()
+      value = if @$element.is(":checkbox")
+        @element.checked
+      else
+        @element.value
+      localStorage[@storageKey] = value
+      e = $.Event('phnx.saved')
+      @$element.trigger(e)
+      @updateIndex()
 
     start: ->
       self = @
