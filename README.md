@@ -13,7 +13,7 @@ Enough words! Take a look at
 
 ## Demo
 
-[![Phoenix Demo](http://storage.kugaevsky.ru/images/Phoenix__jQuery_plugin_to_store_form_fields_values_via_Web_Storage_API_20131221_170356.png)](http://kugaevsky.github.io/jquery-phoenix/)
+[![Phoenix Demo](http://kugaevsky.github.io/jquery-phoenix/demo.png)](http://kugaevsky.github.io/jquery-phoenix/)
 
 [Try the DEMO!](http://kugaevsky.github.io/jquery-phoenix/)
 
