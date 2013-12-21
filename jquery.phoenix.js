@@ -4,7 +4,7 @@
     pluginName = 'phoenix';
     defaults = {
       namespace: 'phoenixStorage',
-      maxItems: 50,
+      maxItems: 100,
       saveInterval: 1000,
       clearOnSubmit: false
     };
