@@ -8,17 +8,21 @@
     <link href="http://cdn.jsdelivr.net/foundation/5.0.2/css/foundation.min.css" rel="stylesheet" />
     <link href="https://raw.github.com/simonwhitaker/github-fork-ribbon-css/master/gh-fork-ribbon.css" rel="stylesheet" />
     <style type="text/css">
+      html {
+        -webkit-font-smoothing: antialiased;
+      }
+
       code {
         font-weight: lighter;
         color: #888888;
       }
 
       textarea {
-        height: 6rem;
+        height: 4rem;
       }
 
       pre {
-        height: 270px;
+        max-height: 590px;
         overflow: hidden;
       }
 
@@ -31,6 +35,14 @@
       .panel {
         padding-bottom: 0.75rem;
         margin-bottom: 0.5rem;
+      }
+
+      .inputs div > label:first-child {
+        font-size: 100%;
+      }
+
+      .alert-box > p:last-child {
+        margin-bottom: 0;
       }
     </style>
   </head>
@@ -47,22 +59,63 @@
           <h2>
             Phoenix <small>— jQuery plugin to save form fields values</small>
           </h2>
-          <br />
         </div>
       </div>
       <div class="row">
-        <div class="small-12 large-7 columns">
+        <div class="small-12 large-8 columns">
+          <div class="alert-box warning">
+            <p>
+              Change field values, mark checkboxes, switch radio buttons and then refresh page or reopen your browser tab. All changes you've done will be saved and restored with love and care.
+            </p>
+          </div>
           <div class="panel">
             <form id="my-form">
               <div class="inputs">
                 <div>
-                  <input class="phoenix-input" id="first-input" name="input1" type="text" value="First form field" />
+                  <label for="first-input">Input</label><input class="phoenix-input" id="first-input" name="input1" type="text" value="First form field" />
                 </div>
                 <div>
-                  <textarea class="phoenix-input" id="textarea" name="textarea1">A long time ago, in a galaxy far, far away.... </textarea>
+                  <label for="textarea">Textarea</label><textarea class="phoenix-input" id="textarea" name="textarea1">A long time ago, in a galaxy far, far away.... </textarea>
                 </div>
-                <div>
-                  <input class="phoenix-input" id="checkbox1" type="checkbox" /><label for="checkbox1">Checkbox 1</label><input class="phoenix-input" id="checkbox2" type="checkbox" /><label for="checkbox2">Checkbox 2</label><input checked="checked" class="phoenix-input" id="checkbox3" type="checkbox" /><label for="checkbox3">Checkbox 3</label>
+                <div class="row">
+                  <div class="small-12 large-6 columns">
+                    <label for="multi-select">Multiple select</label><select class="phoenix-input" id="multi-select" multiple="" name="multi-select">
+                      <option selected="" value="Luke">
+                        Luke Skywalker
+                      </option>
+                      <option value="Han">
+                        Han Solo
+                      </option>
+                      <option value="Chewbacca">
+                        Chewbacca
+                      </option>
+                      <option value="Yoda">
+                        Master Yoda
+                      </option>
+                    </select>
+                  </div>
+                  <div class="small-12 large-6 columns select">
+                    <label for="single-select">Single select</label><select class="phoenix-input" id="single-select" name="single-select">
+                      <option value="Luke">
+                        Luke Skywalker
+                      </option>
+                      <option value="Han">
+                        Han Solo
+                      </option>
+                      <option selected="" value="Chewbacca">
+                        Chewbacca
+                      </option>
+                      <option value="Yoda">
+                        Master Yoda
+                      </option>
+                    </select>
+                  </div>
+                </div>
+                <div class="checkboxes">
+                  <label>Checkboxes</label><input class="phoenix-input" id="checkbox1" type="checkbox" /><label for="checkbox1">Checkbox 1</label><input class="phoenix-input" id="checkbox2" type="checkbox" /><label for="checkbox2">Checkbox 2</label><input checked="checked" class="phoenix-input" id="checkbox3" type="checkbox" /><label for="checkbox3">Checkbox 3</label>
+                </div>
+                <div class="radio">
+                  <label>Radio</label><input class="phoenix-input" id="death-star" name="spaceship" type="radio" value="death-star" /><label for="death-star">Death Star</label><input checked="checked" class="phoenix-input" id="falcon" name="spaceship" type="radio" value="falcon" /><label for="falcon">Millenium Falcon</label>
                 </div>
               </div>
             </form>
@@ -83,9 +136,6 @@
                 <a class="button small alert" data-phoenix-action="remove" href="#">Remove</a>
               </li>
             </ul>
-            <p>
-              Type something, try to reload page, play with buttons, close browser – do what you want.
-            </p>
             <ul class="inline-list">
               <li>
                 <a href="https://github.com/kugaevsky/jquery-phoenix/">GitHub</a>
@@ -116,9 +166,9 @@
               </li>
             </ul>
           </div>
-          <small><nobr>2013 ©  <a href="http://kugaevsky.ru">Nick Kugaevsky</a> </nobr></small>
+          <small><nobr>2013 © Made with &hearts; by  <a href="http://kugaevsky.ru">Nick Kugaevsky</a> </nobr></small>
         </div>
-        <div class="small-12 large-5 columns">
+        <div class="small-12 large-4 columns">
           <div class="panel callout">
             <h4 class="subheader">
               Events log

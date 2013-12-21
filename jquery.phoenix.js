@@ -54,11 +54,17 @@
       };
 
       Phoenix.prototype.load = function() {
-        var e, savedValue;
+        var e, savedValue, self;
         savedValue = localStorage[this.storageKey];
         if (savedValue != null) {
-          if (this.$element.is(":checkbox")) {
+          if (this.$element.is(":checkbox, :radio")) {
             this.element.checked = JSON.parse(savedValue);
+          } else if (this.element.tagName === "SELECT") {
+            self = this;
+            this.$element.find('option').prop('selected', false);
+            $.each(JSON.parse(savedValue), function(i, value) {
+              return self.$element.find("option[value='" + value + "']").prop('selected', true);
+            });
           } else {
             this.element.value = savedValue;
           }
@@ -68,9 +74,10 @@
       };
 
       Phoenix.prototype.save = function() {
-        var e, value;
-        value = this.$element.is(":checkbox") ? this.element.checked : this.element.value;
-        localStorage[this.storageKey] = value;
+        var e, selectedValues;
+        localStorage[this.storageKey] = this.$element.is(":checkbox, :radio") ? this.element.checked : this.element.tagName === "SELECT" ? (selectedValues = $.map(this.$element.find("option:selected"), function(el) {
+          return el.value;
+        }), JSON.stringify(selectedValues)) : this.element.value;
         e = $.Event('phnx.saved');
         this.$element.trigger(e);
         return this.updateIndex();
