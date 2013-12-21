@@ -108,4 +108,5 @@ Distributed under [MIT license](https://github.com/kugaevsky/jquery-phoenix/blob
 ### Contributing
 
 Feel free to create pull request of your changes. But only in [CoffeeScript](http://jashkenas.github.io/coffee-script/).
-[All contributors](https://github.com/kugaevsky/jquery-phoenix/graphs/contributors).
+
+[Almighty contributors](https://github.com/kugaevsky/jquery-phoenix/graphs/contributors).
