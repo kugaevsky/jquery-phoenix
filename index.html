@@ -30,6 +30,7 @@
 
       .panel {
         padding-bottom: 0.75rem;
+        margin-bottom: 0.5rem;
       }
     </style>
   </head>
@@ -55,57 +56,67 @@
             <form id="my-form">
               <div class="inputs">
                 <div>
-                  <input class="phoenix-input" type="text" />
+                  <input class="phoenix-input" id="first-input" name="input1" type="text" value="First form field" />
                 </div>
                 <div>
-                  <textarea class="phoenix-input" rows="10"></textarea>
+                  <textarea class="phoenix-input" id="textarea" name="textarea1">A long time ago, in a galaxy far, far away.... </textarea>
+                </div>
+                <div>
+                  <input class="phoenix-input" id="checkbox1" type="checkbox" /><label for="checkbox1">Checkbox 1</label><input class="phoenix-input" id="checkbox2" type="checkbox" /><label for="checkbox2">Checkbox 2</label><input checked="checked" class="phoenix-input" id="checkbox3" type="checkbox" /><label for="checkbox3">Checkbox 3</label>
                 </div>
               </div>
-              <ul class="button-group">
-                <li>
-                  <a class="button small success" data-phoenix-action="start" href="#">Start</a>
-                </li>
-                <li>
-                  <a class="button small alert" data-phoenix-action="stop" href="#">Stop</a>
-                </li>
-                <li>
-                  <a class="button small" data-phoenix-action="load" href="#">Load</a>
-                </li>
-                <li>
-                  <a class="button small" data-phoenix-action="save" href="#">Save</a>
-                </li>
-                <li>
-                  <a class="button small alert" data-phoenix-action="remove" href="#">Remove</a>
-                </li>
-              </ul>
-              <p>
-                Type something, try to reload page, play with buttons, close browser – do what you want.
-              </p>
-              <ul class="inline-list">
-                <li>
-                  <nobr>2013 ©  <a href="http://kugaevsky.ru">Nick Kugaevsky</a> </nobr>
-                </li>
-                <li>
-                  |
-                </li>
-                <li>
-                  <a href="https://github.com/kugaevsky/jquery-phoenix/">GitHub</a>
-                </li>
-                <li>
-                  |
-                </li>
-                <li>
-                  <a href="https://github.com/kugaevsky/jquery-phoenix/blob/master/README.md">Docs</a>
-                </li>
-                <li>
-                  |
-                </li>
-                <li>
-                  <a href="https://github.com/kugaevsky/jquery-phoenix/blob/master/LICENSE.md">License</a>
-                </li>
-              </ul>
             </form>
+            <ul class="button-group">
+              <li>
+                <a class="button small success" data-phoenix-action="start" href="#">Start</a>
+              </li>
+              <li>
+                <a class="button small alert" data-phoenix-action="stop" href="#">Stop</a>
+              </li>
+              <li>
+                <a class="button small" data-phoenix-action="load" href="#">Load</a>
+              </li>
+              <li>
+                <a class="button small" data-phoenix-action="save" href="#">Save</a>
+              </li>
+              <li>
+                <a class="button small alert" data-phoenix-action="remove" href="#">Remove</a>
+              </li>
+            </ul>
+            <p>
+              Type something, try to reload page, play with buttons, close browser – do what you want.
+            </p>
+            <ul class="inline-list">
+              <li>
+                <a href="https://github.com/kugaevsky/jquery-phoenix/">GitHub</a>
+              </li>
+              <li>
+                |
+              </li>
+              <li>
+                <a href="https://github.com/kugaevsky/jquery-phoenix/blob/master/README.md">Docs</a>
+              </li>
+              <li>
+                |
+              </li>
+              <li>
+                <a href="https://github.com/kugaevsky/jquery-phoenix/blob/master/LICENSE">License</a>
+              </li>
+              <li>
+                |
+              </li>
+              <li>
+                <a href="https://github.com/kugaevsky/jquery-phoenix/issues">Issues</a>
+              </li>
+              <li>
+                |
+              </li>
+              <li>
+                <a href="https://github.com/kugaevsky/jquery-phoenix/graphs/contributors">Contributors</a>
+              </li>
+            </ul>
           </div>
+          <small><nobr>2013 ©  <a href="http://kugaevsky.ru">Nick Kugaevsky</a> </nobr></small>
         </div>
         <div class="small-12 large-5 columns">
           <div class="panel callout">

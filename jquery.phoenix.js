@@ -5,21 +5,23 @@
     defaults = {
       namespace: 'phoenixStorage',
       maxItems: 50,
-      saveInterval: 1000
+      saveInterval: 1000,
+      clearOnSubmit: false
     };
     saveTimers = [];
     Phoenix = (function() {
-      function Phoenix(element, index, options, action) {
+      function Phoenix(element, option) {
         this.element = element;
-        this.index = index;
-        this.action = action;
         this._defaults = defaults;
         this._name = pluginName;
         this.$element = $(this.element);
-        this.options = $.extend({}, defaults, options);
+        this.options = $.extend({}, defaults, (typeof option === 'object' ? option : void 0));
+        if (typeof option === 'string') {
+          this.action = option;
+        }
         this.uri = window.location.host + window.location.pathname;
-        this.storageKey = this.options.namespace + '.' + this.uri + '.' + this.index.toString();
-        this.storageIndexKey = this.options.namespace + '.index.' + window.location.host;
+        this.storageKey = [this.options.namespace, this.uri, this.element.tagName, this.element.id, this.element.name].join('.');
+        this.storageIndexKey = [this.options.namespace, 'index', window.location.host].join('.');
         this.init();
       }
 
@@ -55,20 +57,23 @@
         var e, savedValue;
         savedValue = localStorage[this.storageKey];
         if (savedValue != null) {
-          this.element.value = localStorage[this.storageKey];
+          if (this.$element.is(":checkbox")) {
+            this.element.checked = JSON.parse(savedValue);
+          } else {
+            this.element.value = savedValue;
+          }
           e = $.Event('phnx.loaded');
           return this.$element.trigger(e);
         }
       };
 
       Phoenix.prototype.save = function() {
-        var e;
-        if (this.element.value != null) {
-          localStorage[this.storageKey] = this.element.value;
-          e = $.Event('phnx.saved');
-          this.$element.trigger(e);
-          return this.updateIndex();
-        }
+        var e, value;
+        value = this.$element.is(":checkbox") ? this.element.checked : this.element.value;
+        localStorage[this.storageKey] = value;
+        e = $.Event('phnx.saved');
+        this.$element.trigger(e);
+        return this.updateIndex();
       };
 
       Phoenix.prototype.start = function() {
@@ -92,6 +97,10 @@
       };
 
       Phoenix.prototype.init = function() {
+        var self;
+        if (localStorage[this.storageIndexKey] === void 0) {
+          localStorage[this.storageIndexKey] = "[]";
+        }
         switch (this.action) {
           case 'remove':
             return this.remove();
@@ -104,11 +113,14 @@
           case 'save':
             return this.save();
           default:
-            if (localStorage[this.storageIndexKey] === void 0) {
-              localStorage[this.storageIndexKey] = "[]";
-            }
             this.load();
-            return this.start();
+            this.start();
+            self = this;
+            if (this.options.clearOnSubmit) {
+              return $(this.options.clearOnSubmit).submit(function(e) {
+                return self.remove();
+              });
+            }
         }
       };
 
@@ -128,15 +140,8 @@
       var pluginID;
       pluginID = "plugin_" + pluginName;
       return this.each(function(i) {
-        var action, options;
-        if (typeof option === 'object') {
-          options = option;
-        }
-        if (typeof option === 'string') {
-          action = option;
-        }
         if (!($.data(this, pluginID) && !supports_html5_storage())) {
-          return $.data(this, pluginID, new Phoenix(this, i, options, action));
+          return $.data(this, pluginID, new Phoenix(this, option));
         }
       });
     };
