@@ -1,0 +1,42 @@
+{
+    "name": "phoenix",
+    "title": "jQuery Phoenix",
+    "description": "jQuery plugin to save form fields values to Local Storage via HMTL5 Web Storage API. Lost connections, crashed browsers, broken validations – all these shit loose forms data you've filled in with love and care. Phoenix keeps bad things away from forms. It saves form fields values to your browser Local Storage using HTML5 Web Storage API.",
+    "keywords": [
+        "localstorage",
+        "webstorage",
+        "form",
+        "input",
+        "textarea",
+        "state",
+        "persistence",
+        "save",
+        "storage"
+    ],
+    "version": "1.2.0",
+    "author": {
+        "name": "Nick Kugaevsky and almighty contributors",
+        "url": "https://github.com/kugaevsky/jquery-phoenix/graphs/contributors"
+    },
+    "maintainers": [
+        {
+            "name": "Nick Kugaevsky",
+            "email": "nick@kugaevsky.ru",
+            "url": "http://kugaevsky.ru"
+        }
+    ],
+    "licenses": [
+        {
+            "type": "MIT",
+            "url": "https://github.com/kugaevsky/jquery-phoenix/blob/master/LICENSE"
+        }
+    ],
+    "homepage": "https://github.com/kugaevsky/jquery-phoenix",
+    "demo": "http://kugaevsky.github.io/jquery-phoenix/",
+    "bugs": "https://github.com/kugaevsky/jquery-phoenix/issues",
+    "docs": "https://github.com/kugaevsky/jquery-phoenix/blob/master/README.md",
+    "download": "https://raw.github.com/kugaevsky/jquery-phoenix/master/jquery.phoenix.js",
+    "dependencies": {
+        "jquery": ">=1.9"
+    }
+}
