@@ -72,19 +72,26 @@
     load: ->
       savedValue = localStorage[@storageKey]
       if savedValue?
-        if @$element.is(":checkbox")
+        if @$element.is(":checkbox, :radio")
           @element.checked = JSON.parse savedValue
+        else if @element.tagName is "SELECT"
+          self = @
+          @$element.find('option').prop('selected', false)
+          $.each JSON.parse(savedValue), (i, value) ->
+            self.$element.find("option[value='#{value}']").prop('selected', true)
         else
           @element.value = savedValue
         e = $.Event('phnx.loaded')
         @$element.trigger(e)
 
     save: ->
-      value = if @$element.is(":checkbox")
+      localStorage[@storageKey] = if @$element.is(":checkbox, :radio")
         @element.checked
+      else if @element.tagName is "SELECT"
+        selectedValues = $.map(@$element.find("option:selected"), (el) -> el.value)
+        JSON.stringify selectedValues
       else
         @element.value
-      localStorage[@storageKey] = value
       e = $.Event('phnx.saved')
       @$element.trigger(e)
       @updateIndex()
