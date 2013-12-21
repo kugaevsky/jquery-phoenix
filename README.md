@@ -1,4 +1,5 @@
 # Phoenix [![Code Climate](https://codeclimate.com/github/kugaevsky/jquery-phoenix.png)](https://codeclimate.com/github/kugaevsky/jquery-phoenix)
+
 #### jQuery plugin to save form fields values to Local Storage via HMTL5 Web Storage API
 
 Lost connections, crashed browsers, broken validations – all these
@@ -20,6 +21,10 @@ Enough words! Take a look at
 ## Requirements
 
 It's jQuery plugin so it requires [jQuery](http://jquery.com/).
+
+## Installation
+
+Clone from source, [download](https://raw.github.com/kugaevsky/jquery-phoenix/master/jquery.phoenix.js) ([minified](https://raw.github.com/kugaevsky/jquery-phoenix/master/jquery.phoenix.min.js)) or install with [bower](http://bower.io).
 
 ## Usage
 
@@ -51,11 +56,11 @@ Phoenix provides simple but flexible API.
 
 ### Options
 
-You can pass an options object on phoenix initialization.
+You can pass an options object on Phoenix initialization.
 
     $('.phoenix-input').phoenix({
         namespace: 'phoenixStorage',
-        maxItems: 50,
+        maxItems: 100,
         saveInterval: 1000,
         clearOnSubmit: '#stored-form'
       })
@@ -63,9 +68,9 @@ You can pass an options object on phoenix initialization.
 Possible options are:
 
 * `namespace` – localStorage namespace (if you don't like default) – *string*: `phoenixStorage`,
-* `maxItems` – max items to store (every form field is an item) – *integer*: `50`,
+* `maxItems` – max items to store (every form field is an item) – *integer*: `100`,
 * `saveInterval` – how often to save field values to localStorage (milliseconds) – *integer*: `1000`
-* `clearOnSubmit` – form selector (when you submit this form phoenix will remove its stored items) – *string*: false
+* `clearOnSubmit` – form selector (when you submit this form Phoenix will clean up stored items) – *string*: false
 
 ### Methods
 
@@ -97,16 +102,43 @@ Events naming is very obvious, so try them out
 * phnx.saved
 * phnx.removed
 
-### jQuery Plugin registry
+## Compatibility
 
-http://plugins.jquery.com/phoenix/
+### Browsers
 
-### License
+Any compatible with HTML5 Web Storage API browser works well with Phoenix.
+
+* Chrome 4+
+* Firefox 3.5+
+* Safary 4+
+* Opera 10.5+
+* IE 8+
+* All modern mobile browsers (except Opera Mini)
+
+[CanIuse cheatsheet](http://caniuse.com/#feat=namevalue-storage)
+
+### Other plugins
+
+Dozens of plugins make form inputs more powerful and pretty. [Chosen](https://github.com/harvesthq/chosen) or [Select2](https://github.com/ivaynberg/select2) for example. You can use it with Phoenix safely. Just make sure that you initialize Phoenix before these plugins.
+
+## Registries
+
+* [jQuery plugin registry](http://plugins.jquery.com/phoenix/)
+* [jQuery plugins](http://jquery-plugins.net/phoenix-jquery-plugin-to-save-form-fields-values)
+
+## License
 
 Distributed under [MIT license](https://github.com/kugaevsky/jquery-phoenix/blob/master/LICENSE)
 
-### Contributing
+## Contributing
 
 Feel free to create pull request of your changes. But only in [CoffeeScript](http://jashkenas.github.io/coffee-script/).
 
 [Almighty contributors](https://github.com/kugaevsky/jquery-phoenix/graphs/contributors).
+
+----
+
+##### Sponsored by [![Roem.ru](http://roem.ru/bitrix/templates/2012/i/fav.ico)](http://roem.ru/) [Roem.ru](http://roem.ru/)
+
+##### Donate to [![Gittip](https://www.gittip.com/assets/10.2.1/logo.png)](https://www.gittip.com/kugaevsky/) or [![Flattr](http://api.flattr.com/button/flattr-badge-large.png)](https://flattr.com/submit/auto?user_id=kugaevsky&url=https%3A%2F%2Fgithub.com%2Fkugaevsky%2Fjquery-phoenix)
+
