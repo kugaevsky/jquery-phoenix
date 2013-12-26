@@ -1,14 +1,21 @@
 # Phoenix [![Code Climate](https://codeclimate.com/github/kugaevsky/jquery-phoenix.png)](https://codeclimate.com/github/kugaevsky/jquery-phoenix) [![endorse](https://api.coderwall.com/kugaevsky/endorsecount.png)](https://coderwall.com/kugaevsky)
 
-#### jQuery plugin to save form fields values to Local Storage via HMTL5 Web Storage API
+#### jQuery plugin that saves form state to Local Storage via HMTL5 Web Storage APIs
 
 Lost connections, crashed browsers, broken validations – all these
 shit loose forms data you've filled in with love and care.
+
+Phoenix is a jQuery plugin that saves data entered inside form fields
+locally and restores it in case the browser crashes or the page is refreshed accidentally.
 
 **[Phoenix](https://github.com/kugaevsky/jquery-phoenix/)** keeps
 bad things away from your forms. It is very tiny – 3Kb (1Kb gziped),
 but powerful. Phoenix saves form fields values, checkboxes and radio button states
 to your browser Local Storage using HTML5 Web Storage API.
+
+If at any point the Internet connection goes offline, the browser crashes,
+the page is refreshed or the form doesn't validate, the user filling in the form
+can restore the form to his last version instead of re-filling all the form fields again.
 
 Enough words! Take a look at
 
