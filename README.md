@@ -1,4 +1,4 @@
-# Phoenix [![Code Climate](https://codeclimate.com/github/kugaevsky/jquery-phoenix.png)](https://codeclimate.com/github/kugaevsky/jquery-phoenix)
+# Phoenix [![Code Climate](https://codeclimate.com/github/kugaevsky/jquery-phoenix.png)](https://codeclimate.com/github/kugaevsky/jquery-phoenix) [![endorse](https://api.coderwall.com/kugaevsky/endorsecount.png)](https://coderwall.com/kugaevsky)
 
 #### jQuery plugin to save form fields values to Local Storage via HMTL5 Web Storage API
 
@@ -125,6 +125,7 @@ Dozens of plugins make form inputs more powerful and pretty. [Chosen](https://gi
 
 * [jQuery plugin registry](http://plugins.jquery.com/phoenix/)
 * [jQuery plugins](http://jquery-plugins.net/phoenix-jquery-plugin-to-save-form-fields-values)
+* [Softpedia](http://webscripts.softpedia.com/script/Forms-and-Controls-C-C/jQuery-Phoenix-81924.html)
 
 ## License
 
@@ -140,5 +141,5 @@ Feel free to create pull request of your changes. But only in [CoffeeScript](htt
 
 ##### Sponsored by [![Roem.ru](http://roem.ru/bitrix/templates/2012/i/fav.ico)](http://roem.ru/) [Roem.ru](http://roem.ru/)
 
-##### Donate to [![Gittip](https://www.gittip.com/assets/10.2.1/logo.png)](https://www.gittip.com/kugaevsky/) or [![Flattr](http://api.flattr.com/button/flattr-badge-large.png)](https://flattr.com/submit/auto?user_id=kugaevsky&url=https%3A%2F%2Fgithub.com%2Fkugaevsky%2Fjquery-phoenix)
+##### Donate to [![Gittip](https://www.gittip.com/assets/10.2.2/logo.png)](https://www.gittip.com/kugaevsky/) or [![Flattr](http://api.flattr.com/button/flattr-badge-large.png)](https://flattr.com/submit/auto?user_id=kugaevsky&url=https%3A%2F%2Fgithub.com%2Fkugaevsky%2Fjquery-phoenix)
 
