@@ -7,41 +7,41 @@
     <script src="jquery.phoenix.js" type="text/javascript"></script>
     <link href="http://cdn.jsdelivr.net/foundation/5.0.2/css/normalize.css" rel="stylesheet" />
     <link href="http://cdn.jsdelivr.net/foundation/5.0.2/css/foundation.min.css" rel="stylesheet" />
-    <link href="gh-fork-ribbon.css" rel="stylesheet" />
+    <link href="https://raw.github.com/simonwhitaker/github-fork-ribbon-css/master/gh-fork-ribbon.css" rel="stylesheet" />
     <style type="text/css">
       html {
         -webkit-font-smoothing: antialiased;
       }
-
+      
       code {
         font-weight: lighter;
         color: #888888;
       }
-
+      
       textarea {
         height: 4rem;
       }
-
+      
       pre {
         max-height: 590px;
         overflow: hidden;
       }
-
+      
       .inline-list {
         font-size: 80%;
         color: #666666;
         margin-bottom: 0;
       }
-
+      
       .panel {
         padding-bottom: 0.75rem;
         margin-bottom: 0.5rem;
       }
-
+      
       .inputs div > label:first-child {
         font-size: 100%;
       }
-
+      
       .alert-box > p:last-child {
         margin-bottom: 0;
       }
@@ -116,7 +116,7 @@
                   <label>Checkboxes</label><input class="phoenix-input" id="checkbox1" type="checkbox" /><label for="checkbox1">Alderaan</label><input class="phoenix-input" id="checkbox2" type="checkbox" /><label for="checkbox2">Dagobah</label><input checked="checked" class="phoenix-input" id="checkbox3" type="checkbox" /><label for="checkbox3">Tatooine</label>
                 </div>
                 <div class="radio">
-                  <label>Radio</label><input class="phoenix-input" id="sith" name="force" type="radio" value="sith" /><label for="sith">Sith</label><input checked="checked" class="phoenix-input" id="jedi" name="force" type="radio" value="jedi" /><label for="jedi">Jedi</label>
+                  <label>Radio</label><input class="phoenix-input" id="sith" name="force" type="radio" value="sith" /><label for="sith">Sith</label><input checked="checked" class="phoenix-input" id="jedi" name="force" type="radio" value="jedi" /><label for="jedi">Jedi</label><input checked="checked" class="phoenix-input" id="man" name="force" type="radio" value="man" /><label for="man">Just a man</label>
                 </div>
               </div>
             </form>
@@ -184,33 +184,33 @@
         $('.phoenix-input').bind('phnx.loaded', function(e) {
           return $('.callout pre code').prepend("Data loaded\n");
         });
-
+      
         $('.phoenix-input').bind('phnx.saved', function(e) {
           return $('.callout pre code').prepend("Data saved\n");
         });
-
+      
         $('.phoenix-input').bind('phnx.removed', function(e) {
           return $('.callout pre code').prepend("Data removed\n");
         });
-
+      
         $('.phoenix-input').bind('phnx.stopped', function(e) {
           return $('.callout pre code').prepend("Save timer stopped\n");
         });
-
+      
         $('.phoenix-input').bind('phnx.started', function(e) {
           return $('.callout pre code').prepend("Save timer started\n");
         });
-
+      
         $('.phoenix-input').phoenix();
-
+      
         $('[data-phoenix-action]').on('click', function(e) {
           $('.phoenix-input').phoenix($(this).data('phoenix-action'));
           e.preventDefault();
           return e.stopPropagation();
         });
-
+      
       }).call(this);
-
+      
     </script>
   </body>
 </html>
