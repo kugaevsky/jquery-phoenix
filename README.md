@@ -150,3 +150,7 @@ Feel free to create pull request of your changes. But only in [CoffeeScript](htt
 
 ##### Donate to [![Gittip](https://www.gittip.com/assets/10.2.2/logo.png)](https://www.gittip.com/kugaevsky/) or [![Flattr](http://api.flattr.com/button/flattr-badge-large.png)](https://flattr.com/submit/auto?user_id=kugaevsky&url=https%3A%2F%2Fgithub.com%2Fkugaevsky%2Fjquery-phoenix)
 
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/kugaevsky/jquery-phoenix/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
