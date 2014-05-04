@@ -33,6 +33,7 @@
     maxItems: 100
     saveInterval: 1000
     clearOnSubmit: false
+    saveOnChange: false
   saveTimers = []
 
   class Phoenix
@@ -121,6 +122,7 @@
           @start()
           self = @
           $(@options.clearOnSubmit).submit((e) -> self.remove()) if @options.clearOnSubmit
+          $(@element).change(() -> self.save()) if @options.saveOnChange
 
   supports_html5_storage = ->
     try
