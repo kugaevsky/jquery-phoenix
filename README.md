@@ -3,7 +3,7 @@
 #### jQuery plugin that saves form state to Local Storage via HMTL5 Web Storage APIs
 
 Lost connections, crashed browsers, broken validations – all these
-shit loose forms data you've filled in with love and care.
+shit lose forms data you've filled in with love and care.
 
 Phoenix is a jQuery plugin that saves data entered inside form fields
 locally and restores it in case the browser crashes or the page is refreshed accidentally.
