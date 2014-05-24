@@ -28,9 +28,9 @@
 "use strict"
 
 (($, window) ->
-  pluginName = 'phoenix'
+  pluginName = "phoenix"
   defaults =
-    namespace: 'phoenixStorage'
+    namespace: "phoenixStorage"
     maxItems: 100
     saveInterval: 1000
     clearOnSubmit: false
@@ -43,11 +43,11 @@
       @_name        = pluginName
 
       @$element     = $(@element)
-      @options      = $.extend {}, defaults, (option if typeof option is 'object')
-      @action       = option if typeof option is 'string'
+      @options      = $.extend {}, defaults, (option if typeof option is "object")
+      @action       = option if typeof option is "string"
       @uri          = window.location.host + window.location.pathname
-      @storageKey   = [ @options.namespace, @uri, @element.tagName, @element.id, @element.name ].join('.')
-      @storageIndexKey = [ @options.namespace, 'index', window.location.host ].join('.')
+      @storageKey   = [ @options.namespace, @uri, @element.tagName, @element.id, @element.name ].join(".")
+      @storageIndexKey = [ @options.namespace, "index", window.location.host ].join(".")
 
       @init()
 
@@ -56,7 +56,7 @@
     remove: ->
       @stop()
       localStorage.removeItem @storageKey
-      e = $.Event('phnx.removed')
+      e = $.Event("phnx.removed")
       @$element.trigger(e)
       indexedItems = @indexedItems()
       indexedItems.slice $.inArray(@storageKey, indexedItems), 1
@@ -78,12 +78,12 @@
           @element.checked = JSON.parse savedValue
         else if @element.tagName is "SELECT"
           self = @
-          @$element.find('option').prop('selected', false)
+          @$element.find("option").prop("selected", false)
           $.each JSON.parse(savedValue), (i, value) ->
-            self.$element.find("option[value='#{value}']").prop('selected', true)
+            self.$element.find("option[value='#{value}']").prop("selected", true)
         else
           @element.value = savedValue
-        e = $.Event('phnx.loaded')
+        e = $.Event("phnx.loaded")
         @$element.trigger(e)
 
     save: ->
@@ -94,7 +94,7 @@
         JSON.stringify selectedValues
       else
         @element.value
-      e = $.Event('phnx.saved')
+      e = $.Event("phnx.saved")
       @$element.trigger(e)
       @updateIndex()
 
@@ -102,22 +102,22 @@
       self = @
       saveTimer = setInterval (-> self.save()), self.options.saveInterval
       saveTimers.push(saveTimer)
-      e = $.Event('phnx.started')
+      e = $.Event("phnx.started")
       @$element.trigger(e)
 
     stop: ->
       saveTimers.forEach (t) -> clearInterval(t)
-      e = $.Event('phnx.stopped')
+      e = $.Event("phnx.stopped")
       @$element.trigger(e)
 
     init: ->
       localStorage[@storageIndexKey] = "[]" if localStorage[@storageIndexKey] == undefined
       switch @action
-        when 'remove' then @remove()
-        when 'start' then @start()
-        when 'stop' then @stop()
-        when 'load' then @load()
-        when 'save' then @save()
+        when "remove" then @remove()
+        when "start" then @start()
+        when "stop" then @stop()
+        when "load" then @load()
+        when "save" then @save()
         else
           @load()
           @start()
