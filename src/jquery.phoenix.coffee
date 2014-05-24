@@ -125,11 +125,11 @@
   supports_html5_storage = ->
     try
       return "localStorage" of window and window["localStorage"] isnt null
-    catch e
+    catch
       return false
 
   $.fn[pluginName] = (option) ->
     pluginID = "plugin_#{pluginName}"
-    @each (i) ->
+    @each ->
       $.data @, pluginID, new Phoenix(@, option) unless $.data(@, pluginID) && !supports_html5_storage()
 )(jQuery, window)
