@@ -1,6 +1,6 @@
 {
   "name": "jquery-phoenix",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "jQuery plugin to save form fields values to Local Storage via HMTL5 Web Storage API",
   "main": "jquery.phoenix.js",
   "scripts": {
