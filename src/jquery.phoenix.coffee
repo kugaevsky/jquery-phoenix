@@ -26,6 +26,7 @@
 #
 
 (($, window, document) ->
+"use strict"
 
   pluginName = 'phoenix'
   defaults =
