@@ -25,9 +25,9 @@
 # – Configurable usage
 #
 
-"use strict"
-
 (($, window) ->
+  "use strict"
+  
   pluginName = "phoenix"
   defaults =
     namespace: "phoenixStorage"
