@@ -27,7 +27,7 @@
 
 (($, window) ->
   "use strict"
-  
+
   pluginName = "phoenix"
   defaults =
     namespace: "phoenixStorage"
@@ -61,6 +61,7 @@
       indexedItems = @indexedItems()
       indexedItems.slice $.inArray(@storageKey, indexedItems), 1
       localStorage[@storageIndexKey] = JSON.stringify indexedItems
+      return
 
     updateIndex: ->
       indexedItems = @indexedItems()
@@ -70,6 +71,7 @@
           localStorage.removeItem(indexedItems[0])
           indexedItems.shift()
         localStorage[@storageIndexKey] = JSON.stringify(indexedItems)
+      return
 
     load: ->
       savedValue = localStorage[@storageKey]
@@ -132,4 +134,6 @@
     pluginID = "plugin_#{pluginName}"
     @each ->
       $.data @, pluginID, new Phoenix(@, option) unless $.data(@, pluginID) && !supports_html5_storage()
+
+  return
 )(jQuery, window)
