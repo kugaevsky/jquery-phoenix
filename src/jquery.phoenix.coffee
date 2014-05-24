@@ -25,9 +25,9 @@
 # – Configurable usage
 #
 
-(($, window, document) ->
 "use strict"
 
+(($, window) ->
   pluginName = 'phoenix'
   defaults =
     namespace: 'phoenixStorage'
@@ -135,4 +135,4 @@
     pluginID = "plugin_#{pluginName}"
     @each (i) ->
       $.data @, pluginID, new Phoenix(@, option) unless $.data(@, pluginID) && !supports_html5_storage()
-)(jQuery, window, document)
+)(jQuery, window)
