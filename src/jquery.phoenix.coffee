@@ -77,10 +77,9 @@
         if @$element.is(":checkbox, :radio")
           @element.checked = JSON.parse savedValue
         else if @element.tagName is "SELECT"
-          self = @
           @$element.find("option").prop("selected", false)
-          $.each JSON.parse(savedValue), (i, value) ->
-            self.$element.find("option[value='#{value}']").prop("selected", true)
+          $.each JSON.parse(savedValue), (i, value) =>
+            @$element.find("option[value='#{value}']").prop("selected", true)
         else
           @element.value = savedValue
         e = $.Event("phnx.loaded")
@@ -99,8 +98,7 @@
       @updateIndex()
 
     start: ->
-      self = @
-      saveTimer = setInterval (-> self.save()), self.options.saveInterval
+      saveTimer = setInterval (=> @save()), @options.saveInterval
       saveTimers.push(saveTimer)
       e = $.Event("phnx.started")
       @$element.trigger(e)
@@ -121,9 +119,8 @@
         else
           @load()
           @start()
-          self = @
-          $(@options.clearOnSubmit).submit((e) -> self.remove()) if @options.clearOnSubmit
-          $(@element).change(() -> self.save()) if @options.saveOnChange
+          $(@options.clearOnSubmit).submit(=> @remove()) if @options.clearOnSubmit
+          $(@element).change(() => @save()) if @options.saveOnChange
 
   supports_html5_storage = ->
     try
