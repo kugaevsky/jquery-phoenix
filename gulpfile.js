@@ -5,7 +5,7 @@ plugins = require('gulp-load-plugins')();
 
 gulp.task('coffee', function () {
 	gulp.src('src/*.coffee')
-	.pipe(plugins.coffee().on('error', plugins.util.log))
+	.pipe(plugins.coffee({ bare: true }).on('error', plugins.util.log))
 	.pipe(gulp.dest('./'))
 	.pipe(plugins.eslint({
 		globals: {
