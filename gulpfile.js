@@ -35,5 +35,4 @@ gulp.task('build', ['coffee', 'minify']);
 
 gulp.task('watch', function () {
 	gulp.watch('src/*.coffee', ['coffee']);
-	gulp.watch('jquery.phoenix.js', ['minify']);
 });
