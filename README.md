@@ -69,7 +69,8 @@ You can pass an options object on Phoenix initialization.
         namespace: 'phoenixStorage',
         maxItems: 100,
         saveInterval: 1000,
-        clearOnSubmit: '#stored-form'
+        clearOnSubmit: '#stored-form',
+        keyAttributes: ['tagName', 'id']
       })
 
 Possible options are:
@@ -78,6 +79,7 @@ Possible options are:
 * `maxItems` – max items to store (every form field is an item) – *integer*: `100`,
 * `saveInterval` – how often to save field values to localStorage (milliseconds) – *integer*: `1000`
 * `clearOnSubmit` – form selector (when you submit this form Phoenix will clean up stored items) – *string*: false
+* `keyAttributes` - define which element attributes will be used to find the correct element to populate - *array*: ['tagName', 'id', 'name']
 
 ### Methods
 
