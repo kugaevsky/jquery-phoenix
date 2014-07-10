@@ -35,6 +35,7 @@
     saveInterval: 1000
     clearOnSubmit: false
     saveOnChange: false
+    keyAttributes: ["tagName", "id", "name"]
   saveTimers = []
 
   class Phoenix
@@ -46,7 +47,8 @@
       @options      = $.extend {}, defaults, (option if typeof option is "object")
       @action       = option if typeof option is "string"
       @uri          = window.location.host + window.location.pathname
-      @storageKey   = [ @options.namespace, @uri, @element.tagName, @element.id, @element.name ].join(".")
+      storageArray  = [ @options.namespace, @uri ].concat (@element[attr] for attr in @options.keyAttributes)
+      @storageKey   = storageArray.join "."
       @storageIndexKey = [ @options.namespace, "index", window.location.host ].join(".")
 
       @init()
