@@ -7,11 +7,13 @@
     maxItems: 100,
     saveInterval: 1000,
     clearOnSubmit: false,
-    saveOnChange: false
+    saveOnChange: false,
+    keyAttributes: ["tagName", "id", "name"]
   };
   saveTimers = [];
   Phoenix = (function() {
     function Phoenix(element, option) {
+      var attr, storageArray;
       this.element = element;
       this._defaults = defaults;
       this._name = pluginName;
@@ -21,7 +23,17 @@
         this.action = option;
       }
       this.uri = window.location.host + window.location.pathname;
-      this.storageKey = [this.options.namespace, this.uri, this.element.tagName, this.element.id, this.element.name].join(".");
+      storageArray = [this.options.namespace, this.uri].concat((function() {
+        var _i, _len, _ref, _results;
+        _ref = this.options.keyAttributes;
+        _results = [];
+        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+          attr = _ref[_i];
+          _results.push(this.element[attr]);
+        }
+        return _results;
+      }).call(this));
+      this.storageKey = storageArray.join(".");
       this.storageIndexKey = [this.options.namespace, "index", window.location.host].join(".");
       this.init();
     }
