@@ -1,3 +1,32 @@
+/*
+
+Copyright (c) 2013-2014 Nick Kugaevsky
+
+Licensed under the MIT License
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+DEALINGS IN THE SOFTWARE.
+
+Phoenix is a simple jQuery plugin to make your form
+input safe (I mean save) in your browser's local storage.
+
+@version 1.2.1
+@url github.com/kugaevsky/jquery-phoenix
+---------------------
+
+FEATURES:
+- HTML5 localStorage persistance
+- Simple event API
+– Configurable usage
+
+ */
+
 (function($, window) {
   "use strict";
   var Phoenix, defaults, pluginName, saveTimers, supports_html5_storage;
