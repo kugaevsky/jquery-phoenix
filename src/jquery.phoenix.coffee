@@ -1,5 +1,6 @@
 ###
-Copyright 2013 Nick Kugaevsky
+
+Copyright (c) 2013-2014 Nick Kugaevsky
 
 Licensed under the MIT License
 
@@ -21,18 +22,23 @@ input safe (I mean save) in your browser's local storage.
 
 FEATURES:
 - HTML5 localStorage persistance
-- Simple API
-– Rich event bindings
+- Simple event API
+– Configurable usage
+
 ###
 
-(($, window, document) ->
 
-  pluginName = 'phoenix'
+(($, window) ->
+  "use strict"
+
+  pluginName = "phoenix"
   defaults =
-    namespace: 'phoenixStorage'
+    namespace: "phoenixStorage"
     maxItems: 100
     saveInterval: 1000
     clearOnSubmit: false
+    saveOnChange: false
+    keyAttributes: ["tagName", "id", "name"]
   saveTimers = []
 
   class Phoenix
@@ -41,11 +47,12 @@ FEATURES:
       @_name        = pluginName
 
       @$element     = $(@element)
-      @options      = $.extend {}, defaults, (option if typeof option is 'object')
-      @action       = option if typeof option is 'string'
+      @options      = $.extend {}, defaults, (option if typeof option is "object")
+      @action       = option if typeof option is "string"
       @uri          = window.location.host + window.location.pathname
-      @storageKey   = [ @options.namespace, @uri, @element.tagName, @element.id, @element.name ].join('.')
-      @storageIndexKey = [ @options.namespace, 'index', window.location.host ].join('.')
+      storageArray  = [ @options.namespace, @uri ].concat (@element[attr] for attr in @options.keyAttributes)
+      @storageKey   = storageArray.join "."
+      @storageIndexKey = [ @options.namespace, "index", window.location.host ].join(".")
 
       @init()
 
@@ -54,11 +61,12 @@ FEATURES:
     remove: ->
       @stop()
       localStorage.removeItem @storageKey
-      e = $.Event('phnx.removed')
+      e = $.Event("phnx.removed")
       @$element.trigger(e)
       indexedItems = @indexedItems()
       indexedItems.slice $.inArray(@storageKey, indexedItems), 1
       localStorage[@storageIndexKey] = JSON.stringify indexedItems
+      return
 
     updateIndex: ->
       indexedItems = @indexedItems()
@@ -68,6 +76,7 @@ FEATURES:
           localStorage.removeItem(indexedItems[0])
           indexedItems.shift()
         localStorage[@storageIndexKey] = JSON.stringify(indexedItems)
+      return
 
     load: ->
       savedValue = localStorage[@storageKey]
@@ -75,13 +84,12 @@ FEATURES:
         if @$element.is(":checkbox, :radio")
           @element.checked = JSON.parse savedValue
         else if @element.tagName is "SELECT"
-          self = @
-          @$element.find('option').prop('selected', false)
-          $.each JSON.parse(savedValue), (i, value) ->
-            self.$element.find("option[value='#{value}']").prop('selected', true)
+          @$element.find("option").prop("selected", false)
+          $.each JSON.parse(savedValue), (i, value) =>
+            @$element.find("option[value='#{value}']").prop("selected", true)
         else
           @element.value = savedValue
-        e = $.Event('phnx.loaded')
+        e = $.Event("phnx.loaded")
         @$element.trigger(e)
 
     save: ->
@@ -92,44 +100,45 @@ FEATURES:
         JSON.stringify selectedValues
       else
         @element.value
-      e = $.Event('phnx.saved')
+      e = $.Event("phnx.saved")
       @$element.trigger(e)
       @updateIndex()
 
     start: ->
-      self = @
-      saveTimer = setInterval (-> self.save()), self.options.saveInterval
+      saveTimer = setInterval (=> @save()), @options.saveInterval
       saveTimers.push(saveTimer)
-      e = $.Event('phnx.started')
+      e = $.Event("phnx.started")
       @$element.trigger(e)
 
     stop: ->
       saveTimers.forEach (t) -> clearInterval(t)
-      e = $.Event('phnx.stopped')
+      e = $.Event("phnx.stopped")
       @$element.trigger(e)
 
     init: ->
       localStorage[@storageIndexKey] = "[]" if localStorage[@storageIndexKey] == undefined
       switch @action
-        when 'remove' then @remove()
-        when 'start' then @start()
-        when 'stop' then @stop()
-        when 'load' then @load()
-        when 'save' then @save()
+        when "remove" then @remove()
+        when "start" then @start()
+        when "stop" then @stop()
+        when "load" then @load()
+        when "save" then @save()
         else
           @load()
           @start()
-          self = @
-          $(@options.clearOnSubmit).submit((e) -> self.remove()) if @options.clearOnSubmit
+          $(@options.clearOnSubmit).submit(=> @remove()) if @options.clearOnSubmit
+          $(@element).change(() => @save()) if @options.saveOnChange
 
   supports_html5_storage = ->
     try
       return "localStorage" of window and window["localStorage"] isnt null
-    catch e
+    catch
       return false
 
   $.fn[pluginName] = (option) ->
     pluginID = "plugin_#{pluginName}"
-    @each (i) ->
+    @each ->
       $.data @, pluginID, new Phoenix(@, option) unless $.data(@, pluginID) && !supports_html5_storage()
-)(jQuery, window, document)
+
+  return
+)(jQuery, window)
