@@ -3,7 +3,7 @@
 #### jQuery plugin that saves form state to Local Storage via HMTL5 Web Storage APIs
 
 Lost connections, crashed browsers, broken validations – all these
-shit loose forms data you've filled in with love and care.
+shit lose forms data you've filled in with love and care.
 
 Phoenix is a jQuery plugin that saves data entered inside form fields
 locally and restores it in case the browser crashes or the page is refreshed accidentally.
@@ -69,7 +69,8 @@ You can pass an options object on Phoenix initialization.
         namespace: 'phoenixStorage',
         maxItems: 100,
         saveInterval: 1000,
-        clearOnSubmit: '#stored-form'
+        clearOnSubmit: '#stored-form',
+        keyAttributes: ['tagName', 'id']
       })
 
 Possible options are:
@@ -77,7 +78,8 @@ Possible options are:
 * `namespace` – localStorage namespace (if you don't like default) – *string*: `phoenixStorage`,
 * `maxItems` – max items to store (every form field is an item) – *integer*: `100`,
 * `saveInterval` – how often to save field values to localStorage (milliseconds) – *integer*: `1000`
-* `clearOnSubmit` – form selector (when you submit this form Phoenix will clean up stored items) – *string*: false
+* `clearOnSubmit` – form selector (when you submit this form Phoenix will clean up stored items) – *string*: `false`
+* `keyAttributes` - define which element attributes will be used to find the correct element to populate - *array*: `['tagName', 'id', 'name']`
 
 ### Methods
 
@@ -148,5 +150,9 @@ Feel free to create pull request of your changes. But only in [CoffeeScript](htt
 
 ##### Sponsored by [![Roem.ru](http://roem.ru/bitrix/templates/2012/i/fav.ico)](http://roem.ru/) [Roem.ru](http://roem.ru/)
 
-##### Donate to [![Gittip](https://www.gittip.com/assets/10.2.2/logo.png)](https://www.gittip.com/kugaevsky/) or [![Flattr](http://api.flattr.com/button/flattr-badge-large.png)](https://flattr.com/submit/auto?user_id=kugaevsky&url=https%3A%2F%2Fgithub.com%2Fkugaevsky%2Fjquery-phoenix)
+##### Donate to [![Gittip](http://building.gittip.com/assets/gittip.svg)](https://www.gittip.com/kugaevsky/) or [![Flattr](http://api.flattr.com/button/flattr-badge-large.png)](https://flattr.com/submit/auto?user_id=kugaevsky&url=https%3A%2F%2Fgithub.com%2Fkugaevsky%2Fjquery-phoenix)
+
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/kugaevsky/jquery-phoenix/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
 
