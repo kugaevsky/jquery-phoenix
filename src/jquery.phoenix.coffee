@@ -78,7 +78,7 @@
     load: ->
       savedValue = localStorage[@storageKey]
       if savedValue?
-        @loadValues()
+        @loadValue()
         e = $.Event("phnx.loaded")
         @$element.trigger(e)
 
