@@ -150,7 +150,7 @@ Feel free to create pull request of your changes. But only in [CoffeeScript](htt
 
 ##### Sponsored by [![Roem.ru](http://roem.ru/bitrix/templates/2012/i/fav.ico)](http://roem.ru/) [Roem.ru](http://roem.ru/)
 
-##### Donate to [![Gittip](http://building.gittip.com/assets/gittip.svg)](https://www.gittip.com/kugaevsky/) or [![Flattr](http://api.flattr.com/button/flattr-badge-large.png)](https://flattr.com/submit/auto?user_id=kugaevsky&url=https%3A%2F%2Fgithub.com%2Fkugaevsky%2Fjquery-phoenix)
+##### Donate to [GitTip](https://www.gittip.com/kugaevsky/) or [![Flattr](http://api.flattr.com/button/flattr-badge-large.png)](https://flattr.com/submit/auto?user_id=kugaevsky&url=https%3A%2F%2Fgithub.com%2Fkugaevsky%2Fjquery-phoenix)
 
 
 
