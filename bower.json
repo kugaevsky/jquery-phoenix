@@ -6,7 +6,7 @@
     "Nick Kugaevsky <nick@kugaevsky.ru>"
   ],
   "description": "jQuery plugin to save form fields values to Local Storage via HMTL5 Web Storage API",
-  "main": "phoenix.jquery.js",
+  "main": "jquery.phoenix.js",
   "keywords": [
     "localstorage",
     "webstorage",
