@@ -109,7 +109,11 @@ FEATURES:
             };
           })(this));
         } else {
-          this.element.value = savedValue;
+          try{
+            this.element.value = savedValue;
+          } catch (err) {
+            console.log("Unable to restore state to " + this.element.name);
+          }
         }
         e = $.Event("phnx.loaded");
         return this.$element.trigger(e);
