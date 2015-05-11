@@ -105,7 +105,7 @@ FEATURES:
       @updateIndex()
 
     start: ->
-      saveTimer = setInterval (=> @save()), @options.saveInterval
+      saveTimer = if @options.saveInterval >= 0 then setInterval (=> @save()), @options.saveInterval else setTimeout (=> @save())
       saveTimers.push(saveTimer)
       e = $.Event("phnx.started")
       @$element.trigger(e)
