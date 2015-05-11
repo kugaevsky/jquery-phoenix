@@ -16,7 +16,7 @@ DEALINGS IN THE SOFTWARE.
 Phoenix is a simple jQuery plugin to make your form
 input safe (I mean save) in your browser's local storage.
 
-@version 1.2.1
+@version 1.2.2
 @url github.com/kugaevsky/jquery-phoenix
 ---------------------
 
@@ -132,12 +132,12 @@ FEATURES:
 
     Phoenix.prototype.start = function() {
       var e, saveTimer;
-      saveTimer = this.options.saveInterval >= 0 
+      saveTimer = this.options.saveInterval >= 0
 	  ? setInterval(((function(_this) {
         return function() {
           return _this.save();
         };
-      })(this)), this.options.saveInterval) 
+      })(this)), this.options.saveInterval)
 	  : setTimeout(((function(_this) {
         return function() {
           return _this.save();
