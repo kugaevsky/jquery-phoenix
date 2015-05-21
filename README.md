@@ -67,6 +67,7 @@ You can pass an options object on Phoenix initialization.
 
     $('.phoenix-input').phoenix({
         namespace: 'phoenixStorage',
+        webStorage: 'sessionStorage',
         maxItems: 100,
         saveInterval: 1000,
         clearOnSubmit: '#stored-form',
@@ -75,7 +76,8 @@ You can pass an options object on Phoenix initialization.
 
 Possible options are:
 
-* `namespace` – localStorage namespace (if you don't like default) – *string*: `phoenixStorage`,
+* `namespace` – webStorage namespace (if you don't like default) – *string*: `phoenixStorage`,
+* `webStorage` – method used; sessionStorage or localStorage, (localStorage by default) – *string*: `localStorage`,
 * `maxItems` – max items to store (every form field is an item) – *integer*: `100`,
 * `saveInterval` – how often to save field values to localStorage (milliseconds). If it's negative, field will only be saved when invoking `save` method – *integer*: `1000`
 * `clearOnSubmit` – form selector (when you submit this form Phoenix will clean up stored items) – *string*: `false`

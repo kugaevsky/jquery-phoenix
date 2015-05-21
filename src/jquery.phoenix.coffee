@@ -34,6 +34,7 @@ FEATURES:
   pluginName = "phoenix"
   defaults =
     namespace: "phoenixStorage"
+    webStorage: "localStorage"
     maxItems: 100
     saveInterval: 1000
     clearOnSubmit: false
@@ -53,19 +54,20 @@ FEATURES:
       storageArray  = [ @options.namespace, @uri ].concat (@element[attr] for attr in @options.keyAttributes)
       @storageKey   = storageArray.join "."
       @storageIndexKey = [ @options.namespace, "index", window.location.host ].join(".")
+      @webStorage = window[@options.webStorage]
 
       @init()
 
-    indexedItems: -> JSON.parse localStorage[@storageIndexKey]
+    indexedItems: -> JSON.parse @webStorage[@storageIndexKey]
 
     remove: ->
       @stop()
-      localStorage.removeItem @storageKey
+      @webStorage.removeItem @storageKey
       e = $.Event("phnx.removed")
       @$element.trigger(e)
       indexedItems = @indexedItems()
       indexedItems.slice $.inArray(@storageKey, indexedItems), 1
-      localStorage[@storageIndexKey] = JSON.stringify indexedItems
+      @webStorage[@storageIndexKey] = JSON.stringify indexedItems
       return
 
     updateIndex: ->
@@ -73,13 +75,13 @@ FEATURES:
       if $.inArray(@storageKey, indexedItems) == -1
         indexedItems.push @storageKey
         if indexedItems.length > @options.maxItems
-          localStorage.removeItem(indexedItems[0])
+          @webStorage.removeItem(indexedItems[0])
           indexedItems.shift()
-        localStorage[@storageIndexKey] = JSON.stringify(indexedItems)
+        @webStorage[@storageIndexKey] = JSON.stringify(indexedItems)
       return
 
     load: ->
-      savedValue = localStorage[@storageKey]
+      savedValue = @webStorage[@storageKey]
       if savedValue?
         if @$element.is(":checkbox, :radio")
           @element.checked = JSON.parse savedValue
@@ -93,7 +95,7 @@ FEATURES:
         @$element.trigger(e)
 
     save: ->
-      localStorage[@storageKey] = if @$element.is(":checkbox, :radio")
+      @webStorage[@storageKey] = if @$element.is(":checkbox, :radio")
         @element.checked
       else if @element.tagName is "SELECT"
         selectedValues = $.map(@$element.find("option:selected"), (el) -> el.value)
@@ -116,7 +118,7 @@ FEATURES:
       @$element.trigger(e)
 
     init: ->
-      localStorage[@storageIndexKey] = "[]" if localStorage[@storageIndexKey] == undefined
+      @webStorage[@storageIndexKey] = "[]" if @webStorage[@storageIndexKey] == undefined
       switch @action
         when "remove" then @remove()
         when "start" then @start()
@@ -129,16 +131,16 @@ FEATURES:
           $(@options.clearOnSubmit).submit(=> @remove()) if @options.clearOnSubmit
           $(@element).change(() => @save()) if @options.saveOnChange
 
-  supports_html5_storage = ->
+  supports_html5_storage = (webStorage) ->
     try
-      return "localStorage" of window and window["localStorage"] isnt null
+      return webStorage of window and window[webStorage] isnt null
     catch
       return false
 
   $.fn[pluginName] = (option) ->
     pluginID = "plugin_#{pluginName}"
     @each ->
-      $.data @, pluginID, new Phoenix(@, option) unless $.data(@, pluginID) && !supports_html5_storage()
+      $.data @, pluginID, new Phoenix(@, option) unless $.data(@, pluginID) && !supports_html5_storage(option.webStorage || defaults.webStorage)
 
   return
 )(jQuery, window)
