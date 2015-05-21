@@ -32,6 +32,7 @@ gulp.task('minify', function() {
 });
 
 gulp.task('build', ['coffee', 'minify']);
+gulp.task('default', ['build']);
 
 gulp.task('watch', function () {
 	gulp.watch('src/*.coffee', ['coffee']);
