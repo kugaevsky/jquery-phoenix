@@ -1,0 +1,38 @@
+html {
+  -webkit-font-smoothing: antialiased;
+}
+
+code {
+  font-weight: lighter;
+  color: #888888;
+  background: transparent;
+  border: none;
+}
+
+textarea {
+  height: 4rem;
+}
+
+pre {
+  max-height: 590px;
+  overflow: auto;
+}
+
+.inline-list {
+  font-size: 80%;
+  color: #666666;
+  margin-bottom: 0;
+}
+
+.panel {
+  padding-bottom: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.inputs div > label:first-child {
+  font-size: 100%;
+}
+
+.alert-box > p:last-child {
+  margin-bottom: 0;
+}

@@ -1,6 +1,7 @@
+
 /*
 
-Copyright (c) 2013-2014 Nick Kugaevsky
+Copyright (c) 2013-2015 Nick Kugaevsky
 
 Licensed under the MIT License
 
@@ -16,7 +17,7 @@ DEALINGS IN THE SOFTWARE.
 Phoenix is a simple jQuery plugin to make your form
 input safe (I mean save) in your browser's local storage.
 
-@version 1.2.1
+@version 1.2.3
 @url github.com/kugaevsky/jquery-phoenix
 ---------------------
 
@@ -24,15 +25,14 @@ FEATURES:
 - HTML5 localStorage persistance
 - Simple event API
 – Configurable usage
-
  */
-
 (function($, window) {
   "use strict";
-  var Phoenix, defaults, pluginName, saveTimers, supports_html5_storage;
+  var Phoenix, defaults, pluginName, saveTimers, supportsHtml5Storage;
   pluginName = "phoenix";
   defaults = {
     namespace: "phoenixStorage",
+    webStorage: "localStorage",
     maxItems: 100,
     saveInterval: 1000,
     clearOnSubmit: false,
@@ -64,22 +64,23 @@ FEATURES:
       }).call(this));
       this.storageKey = storageArray.join(".");
       this.storageIndexKey = [this.options.namespace, "index", window.location.host].join(".");
+      this.webStorage = window[this.options.webStorage];
       this.init();
     }
 
     Phoenix.prototype.indexedItems = function() {
-      return JSON.parse(localStorage[this.storageIndexKey]);
+      return JSON.parse(this.webStorage[this.storageIndexKey]);
     };
 
     Phoenix.prototype.remove = function() {
       var e, indexedItems;
       this.stop();
-      localStorage.removeItem(this.storageKey);
+      this.webStorage.removeItem(this.storageKey);
       e = $.Event("phnx.removed");
       this.$element.trigger(e);
       indexedItems = this.indexedItems();
       indexedItems.slice($.inArray(this.storageKey, indexedItems), 1);
-      localStorage[this.storageIndexKey] = JSON.stringify(indexedItems);
+      this.webStorage[this.storageIndexKey] = JSON.stringify(indexedItems);
     };
 
     Phoenix.prototype.updateIndex = function() {
@@ -88,16 +89,16 @@ FEATURES:
       if ($.inArray(this.storageKey, indexedItems) === -1) {
         indexedItems.push(this.storageKey);
         if (indexedItems.length > this.options.maxItems) {
-          localStorage.removeItem(indexedItems[0]);
+          this.webStorage.removeItem(indexedItems[0]);
           indexedItems.shift();
         }
-        localStorage[this.storageIndexKey] = JSON.stringify(indexedItems);
+        this.webStorage[this.storageIndexKey] = JSON.stringify(indexedItems);
       }
     };
 
     Phoenix.prototype.load = function() {
       var e, savedValue;
-      savedValue = localStorage[this.storageKey];
+      savedValue = this.webStorage[this.storageKey];
       if (savedValue != null) {
         if (this.$element.is(":checkbox, :radio")) {
           this.element.checked = JSON.parse(savedValue);
@@ -118,7 +119,7 @@ FEATURES:
 
     Phoenix.prototype.save = function() {
       var e, selectedValues;
-      localStorage[this.storageKey] = this.$element.is(":checkbox, :radio") ? this.element.checked : this.element.tagName === "SELECT" ? (selectedValues = $.map(this.$element.find("option:selected"), function(el) {
+      this.webStorage[this.storageKey] = this.$element.is(":checkbox, :radio") ? this.element.checked : this.element.tagName === "SELECT" ? (selectedValues = $.map(this.$element.find("option:selected"), function(el) {
         return el.value;
       }), JSON.stringify(selectedValues)) : this.element.value;
       e = $.Event("phnx.saved");
@@ -128,11 +129,15 @@ FEATURES:
 
     Phoenix.prototype.start = function() {
       var e, saveTimer;
-      saveTimer = setInterval(((function(_this) {
+      saveTimer = this.options.saveInterval >= 0 ? setInterval(((function(_this) {
         return function() {
           return _this.save();
         };
-      })(this)), this.options.saveInterval);
+      })(this)), this.options.saveInterval) : setTimeout(((function(_this) {
+        return function() {
+          return _this.save();
+        };
+      })(this)));
       saveTimers.push(saveTimer);
       e = $.Event("phnx.started");
       return this.$element.trigger(e);
@@ -148,8 +153,8 @@ FEATURES:
     };
 
     Phoenix.prototype.init = function() {
-      if (localStorage[this.storageIndexKey] === void 0) {
-        localStorage[this.storageIndexKey] = "[]";
+      if (this.webStorage[this.storageIndexKey] === void 0) {
+        this.webStorage[this.storageIndexKey] = "[]";
       }
       switch (this.action) {
         case "remove":
@@ -185,9 +190,9 @@ FEATURES:
     return Phoenix;
 
   })();
-  supports_html5_storage = function() {
+  supportsHtml5Storage = function(webStorage) {
     try {
-      return "localStorage" in window && window["localStorage"] !== null;
+      return webStorage in window && window[webStorage] !== null;
     } catch (_error) {
       return false;
     }
@@ -196,7 +201,7 @@ FEATURES:
     var pluginID;
     pluginID = "plugin_" + pluginName;
     return this.each(function() {
-      if (!($.data(this, pluginID) && !supports_html5_storage())) {
+      if (!($.data(this, pluginID) && !supportsHtml5Storage(option.webStorage || defaults.webStorage))) {
         return $.data(this, pluginID, new Phoenix(this, option));
       }
     });

@@ -1,0 +1,42 @@
+{
+  "name": "jquery-phoenix",
+  "version": "1.2.3",
+  "description": "jQuery plugin to save form fields values to Local Storage via HMTL5 Web Storage API",
+  "main": "jquery.phoenix.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kugaevsky/jquery-phoenix"
+  },
+  "keywords": [
+    "localstorage",
+    "webstorage",
+    "form",
+    "input",
+    "textarea",
+    "state",
+    "persistence",
+    "save",
+    "storage"
+  ],
+  "author": "Nick Kugaevsky <nick@kugaevsky.ru>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kugaevsky/jquery-phoenix/issues"
+  },
+  "homepage": "https://github.com/kugaevsky/jquery-phoenix",
+  "devDependencies": {
+    "eslint": "^0.6.2",
+    "gulp": "^3.6.2",
+    "gulp-coffee": "^1.4.3",
+    "gulp-eslint": "^0.1.7",
+    "gulp-jade": "^1.0.1",
+    "gulp-load-plugins": "^0.5.1",
+    "gulp-rename": "^1.2.0",
+    "gulp-size": "^0.3.1",
+    "gulp-uglify": "^0.3.0",
+    "gulp-util": "^2.2.14"
+  }
+}
