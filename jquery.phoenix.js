@@ -1,7 +1,7 @@
 
 /*
 
-Copyright (c) 2013-2014 Nick Kugaevsky
+Copyright (c) 2013-2015 Nick Kugaevsky
 
 Licensed under the MIT License
 
@@ -17,7 +17,7 @@ DEALINGS IN THE SOFTWARE.
 Phoenix is a simple jQuery plugin to make your form
 input safe (I mean save) in your browser's local storage.
 
-@version 1.2.2
+@version 1.2.3
 @url github.com/kugaevsky/jquery-phoenix
 ---------------------
 
@@ -28,7 +28,7 @@ FEATURES:
  */
 (function($, window) {
   "use strict";
-  var Phoenix, defaults, pluginName, saveTimers, supports_html5_storage;
+  var Phoenix, defaults, pluginName, saveTimers, supportsHtml5Storage;
   pluginName = "phoenix";
   defaults = {
     namespace: "phoenixStorage",
@@ -190,7 +190,7 @@ FEATURES:
     return Phoenix;
 
   })();
-  supports_html5_storage = function(webStorage) {
+  supportsHtml5Storage = function(webStorage) {
     try {
       return webStorage in window && window[webStorage] !== null;
     } catch (_error) {
@@ -201,7 +201,7 @@ FEATURES:
     var pluginID;
     pluginID = "plugin_" + pluginName;
     return this.each(function() {
-      if (!($.data(this, pluginID) && !supports_html5_storage(option.webStorage || defaults.webStorage))) {
+      if (!($.data(this, pluginID) && !supportsHtml5Storage(option.webStorage || defaults.webStorage))) {
         return $.data(this, pluginID, new Phoenix(this, option));
       }
     });
