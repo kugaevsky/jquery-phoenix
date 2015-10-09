@@ -37,6 +37,7 @@ FEATURES:
     webStorage: "localStorage"
     maxItems: 100
     saveInterval: 1000
+    expireTime: false
     clearOnSubmit: false
     saveOnChange: false
     saveOnInput: false
@@ -54,6 +55,7 @@ FEATURES:
       @uri          = window.location.host + window.location.pathname
       storageArray  = [ @options.namespace, @uri ].concat (@element[attr] for attr in @options.keyAttributes)
       @storageKey   = storageArray.join "."
+      @storageKeyDate  = 'savedDate.' + storageArray.join "."
       @storageIndexKey = [ @options.namespace, "index", window.location.host ].join(".")
       @webStorage = window[@options.webStorage]
 
@@ -82,6 +84,9 @@ FEATURES:
       return
 
     load: ->
+      savedDate = @webStorage[@storageKeyDate]
+      if @options.expireTime and parseInt(savedDate) + parseInt(@options.expireTime) < (new Date).getTime()
+        @remove()
       savedValue = @webStorage[@storageKey]
       if savedValue?
         if @$element.is(":checkbox, :radio")
@@ -96,6 +101,7 @@ FEATURES:
         @$element.trigger(e)
 
     save: ->
+      @webStorage[@storageKeyDate] = (new Date).getTime()
       @webStorage[@storageKey] = if @$element.is(":checkbox, :radio")
         @element.checked
       else if @element.tagName is "SELECT"
