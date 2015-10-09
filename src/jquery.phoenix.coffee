@@ -39,6 +39,7 @@ FEATURES:
     saveInterval: 1000
     clearOnSubmit: false
     saveOnChange: false
+    saveOnInput: false
     keyAttributes: ["tagName", "id", "name"]
   saveTimers = []
 
@@ -129,6 +130,7 @@ FEATURES:
           @load()
           @start()
           $(@options.clearOnSubmit).submit(=> @remove()) if @options.clearOnSubmit
+          $(@element).on('input',() => @save()) if @options.saveOnInput
           $(@element).change(() => @save()) if @options.saveOnChange
 
   supportsHtml5Storage = (webStorage) ->
