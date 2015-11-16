@@ -37,6 +37,15 @@ FEATURES:
     saveInterval: 1000,
     clearOnSubmit: false,
     saveOnChange: false,
+    actions: {
+        //formfieldcb:{ load:loadcbafield,save:savecbafield },   
+    },
+    methods: {
+        /*loadcbafield: function() {
+        },
+        savecbafield: function() {
+        }*/
+    },    
     keyAttributes: ["tagName", "id", "name"]
   };
   saveTimers = [];
@@ -67,6 +76,9 @@ FEATURES:
       this.webStorage = window[this.options.webStorage];
       this.init();
     }
+    Phoenix.prototype.addMethods = function(name,method) {
+        this.options.methods[name] = method;
+    };
 
     Phoenix.prototype.indexedItems = function() {
       return JSON.parse(this.webStorage[this.storageIndexKey]);
@@ -100,7 +112,17 @@ FEATURES:
       var e, savedValue;
       savedValue = this.webStorage[this.storageKey];
       if (savedValue != null) {
-        if (this.$element.is(":checkbox, :radio")) {
+        if(this.options.actions[ this.element.name ]) {
+          $method = this.options.actions[ this.element.name ].load;
+          if(!$.isFunction($method) ) {
+              if(this.options.methods[$method]) {
+                $method = this.options.methods[$method];
+              }
+          }
+          if($.isFunction($method)) {
+              $method.call(this)
+          }
+        } else if (this.$element.is(":checkbox, :radio")) {
           this.element.checked = JSON.parse(savedValue);
         } else if (this.element.tagName === "SELECT") {
           this.$element.find("option").prop("selected", false);
@@ -119,9 +141,21 @@ FEATURES:
 
     Phoenix.prototype.save = function() {
       var e, selectedValues;
-      this.webStorage[this.storageKey] = this.$element.is(":checkbox, :radio") ? this.element.checked : this.element.tagName === "SELECT" ? (selectedValues = $.map(this.$element.find("option:selected"), function(el) {
+      if(this.options.actions[ this.element.name ]) {
+          $method = this.options.actions[ this.element.name ].save;
+          if(!$.isFunction($method) ) {
+              if(this.options.methods[$method]) {
+                $method = this.options.methods[$method]
+              }
+          }
+          if($.isFunction($method)) {
+              $method.call(this)
+          }
+      } else {
+        this.webStorage[this.storageKey] = this.$element.is(":checkbox, :radio") ? this.element.checked : this.element.tagName === "SELECT" ? (selectedValues = $.map(this.$element.find("option:selected"), function(el) {
         return el.value;
-      }), JSON.stringify(selectedValues)) : this.element.value;
+        }), JSON.stringify(selectedValues)) : this.element.value;
+      }
       e = $.Event("phnx.saved");
       this.$element.trigger(e);
       return this.updateIndex();
