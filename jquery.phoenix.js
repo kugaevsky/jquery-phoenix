@@ -81,6 +81,7 @@ FEATURES:
       var e, indexedItems;
       this.stop();
       this.webStorage.removeItem(this.storageKey);
+      this.webStorage.removeItem(this.storageKeyDate);
       e = $.Event("phnx.removed");
       this.$element.trigger(e);
       indexedItems = this.indexedItems();

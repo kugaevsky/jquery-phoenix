@@ -69,6 +69,7 @@ FEATURES:
     remove: ->
       @stop()
       @webStorage.removeItem @storageKey
+      @webStorage.removeItem @storageKeyDate
       e = $.Event("phnx.removed")
       @$element.trigger(e)
       indexedItems = @indexedItems()
