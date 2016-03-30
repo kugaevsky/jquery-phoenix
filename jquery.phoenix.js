@@ -51,6 +51,9 @@ FEATURES:
       if (typeof option === "string") {
         this.action = option;
       }
+      else if (this.options.action) {
+        this.action = this.options.action;
+      }
       this.uri = window.location.host + window.location.pathname;
       storageArray = [this.options.namespace, this.uri].concat((function() {
         var _i, _len, _ref, _results;
