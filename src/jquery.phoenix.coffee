@@ -51,11 +51,14 @@ FEATURES:
 
       @$element     = $(@element)
       @options      = $.extend {}, defaults, (option if typeof option is "object")
-      @action       = option if typeof option is "string"
+      if typeof option is "string"
+        @action       = option
+      else if this.options.action?
+        @action       = this.options.action
       @uri          = window.location.host + window.location.pathname
       storageArray  = [ @options.namespace, @uri ].concat (@element[attr] for attr in @options.keyAttributes)
       @storageKey   = storageArray.join "."
-      @storageKeyDate  = 'savedDate.' + storageArray.join "."
+      @storageKeyDate  = "savedDate." + storageArray.join "."
       @storageIndexKey = [ @options.namespace, "index", window.location.host ].join(".")
       @webStorage = window[@options.webStorage]
 
@@ -66,6 +69,7 @@ FEATURES:
     remove: ->
       @stop()
       @webStorage.removeItem @storageKey
+      @webStorage.removeItem @storageKeyDate
       e = $.Event("phnx.removed")
       @$element.trigger(e)
       indexedItems = @indexedItems()
@@ -136,7 +140,7 @@ FEATURES:
           @load()
           @start()
           $(@options.clearOnSubmit).submit(=> @remove()) if @options.clearOnSubmit
-          $(@element).on('input',() => @save()) if @options.saveOnInput
+          $(@element).on("input",() => @save()) if @options.saveOnInput
           $(@element).change(() => @save()) if @options.saveOnChange
 
   supportsHtml5Storage = (webStorage) ->
