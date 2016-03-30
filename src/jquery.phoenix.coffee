@@ -51,7 +51,10 @@ FEATURES:
 
       @$element     = $(@element)
       @options      = $.extend {}, defaults, (option if typeof option is "object")
-      @action       = option if typeof option is "string"
+      if typeof option is "string"
+        @action       = option
+      else if this.options.action?
+        @action       = this.options.action
       @uri          = window.location.host + window.location.pathname
       storageArray  = [ @options.namespace, @uri ].concat (@element[attr] for attr in @options.keyAttributes)
       @storageKey   = storageArray.join "."
