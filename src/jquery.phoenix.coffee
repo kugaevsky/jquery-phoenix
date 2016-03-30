@@ -55,7 +55,7 @@ FEATURES:
       @uri          = window.location.host + window.location.pathname
       storageArray  = [ @options.namespace, @uri ].concat (@element[attr] for attr in @options.keyAttributes)
       @storageKey   = storageArray.join "."
-      @storageKeyDate  = 'savedDate.' + storageArray.join "."
+      @storageKeyDate  = "savedDate." + storageArray.join "."
       @storageIndexKey = [ @options.namespace, "index", window.location.host ].join(".")
       @webStorage = window[@options.webStorage]
 
@@ -136,7 +136,7 @@ FEATURES:
           @load()
           @start()
           $(@options.clearOnSubmit).submit(=> @remove()) if @options.clearOnSubmit
-          $(@element).on('input',() => @save()) if @options.saveOnInput
+          $(@element).on("input",() => @save()) if @options.saveOnInput
           $(@element).change(() => @save()) if @options.saveOnChange
 
   supportsHtml5Storage = (webStorage) ->
