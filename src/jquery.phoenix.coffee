@@ -41,6 +41,7 @@ FEATURES:
     clearOnSubmit: false
     saveOnChange: false
     saveOnInput: false
+    ignoreUri: false
     keyAttributes: ["tagName", "id", "name"]
   saveTimers = []
 
@@ -55,7 +56,7 @@ FEATURES:
         @action       = option
       else if this.options.action?
         @action       = this.options.action
-      @uri          = window.location.host + window.location.pathname
+      @uri          = @options.ignoreUri ? '' : (window.location.host + window.location.pathname)
       storageArray  = [ @options.namespace, @uri ].concat (@element[attr] for attr in @options.keyAttributes)
       @storageKey   = storageArray.join "."
       @storageKeyDate  = "savedDate." + storageArray.join "."
