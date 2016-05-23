@@ -39,12 +39,13 @@ FEATURES:
     clearOnSubmit: false,
     saveOnChange: false,
     saveOnInput: false,
+    ignoreUri: false,
     keyAttributes: ["tagName", "id", "name"]
   };
   saveTimers = [];
   Phoenix = (function() {
     function Phoenix(element, option) {
-      var attr, storageArray;
+      var attr, storageArray, _ref;
       this.element = element;
       this._defaults = defaults;
       this._name = pluginName;
@@ -55,16 +56,18 @@ FEATURES:
       } else if (this.options.action != null) {
         this.action = this.options.action;
       }
-      this.uri = window.location.host + window.location.pathname;
+      this.uri = (_ref = this.options.ignoreUri) != null ? _ref : {
+        '': window.location.host + window.location.pathname
+      };
       storageArray = [this.options.namespace, this.uri].concat((function() {
-        var j, len, ref, results;
-        ref = this.options.keyAttributes;
-        results = [];
-        for (j = 0, len = ref.length; j < len; j++) {
-          attr = ref[j];
-          results.push(this.element[attr]);
+        var _i, _len, _ref1, _results;
+        _ref1 = this.options.keyAttributes;
+        _results = [];
+        for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
+          attr = _ref1[_i];
+          _results.push(this.element[attr]);
         }
-        return results;
+        return _results;
       }).call(this));
       this.storageKey = storageArray.join(".");
       this.storageKeyDate = "savedDate." + storageArray.join(".");
@@ -103,15 +106,22 @@ FEATURES:
     };
 
     Phoenix.prototype.load = function() {
-      var e, savedDate, savedValue;
+      var $radioEl, e, savedDate, savedValue, value;
       savedDate = this.webStorage[this.storageKeyDate];
       if (this.options.expireTime && parseInt(savedDate) + parseInt(this.options.expireTime) < (new Date).getTime()) {
         this.remove();
       }
       savedValue = this.webStorage[this.storageKey];
       if (savedValue != null) {
-        if (this.$element.is(":checkbox, :radio")) {
+        if (this.$element.is(":checkbox")) {
           this.element.checked = JSON.parse(savedValue);
+        } else if (this.$element.is(":radio")) {
+          this.$element.prop("checked", false);
+          value = JSON.parse(savedValue);
+          $radioEl = $("[name='" + this.element.name + "'][value='" + value + "']");
+          if (!$radioEl.is(':checked')) {
+            $radioEl.prop('checked', true).click();
+          }
         } else if (this.element.tagName === "SELECT") {
           this.$element.find("option").prop("selected", false);
           $.each(JSON.parse(savedValue), (function(_this) {
@@ -128,9 +138,9 @@ FEATURES:
     };
 
     Phoenix.prototype.save = function() {
-      var e, selectedValues;
+      var e, selectedValue, selectedValues;
       this.webStorage[this.storageKeyDate] = (new Date).getTime();
-      this.webStorage[this.storageKey] = this.$element.is(":checkbox, :radio") ? this.element.checked : this.element.tagName === "SELECT" ? (selectedValues = $.map(this.$element.find("option:selected"), function(el) {
+      this.webStorage[this.storageKey] = this.$element.is(":checkbox") ? this.element.checked : this.$element.is(":radio") ? (selectedValue = this.$element.val(), JSON.stringify(selectedValue)) : this.element.tagName === "SELECT" ? (selectedValues = $.map(this.$element.find("option:selected"), function(el) {
         return el.value;
       }), JSON.stringify(selectedValues)) : this.element.value;
       e = $.Event("phnx.saved");
@@ -209,10 +219,9 @@ FEATURES:
 
   })();
   supportsHtml5Storage = function(webStorage) {
-    var error;
     try {
       return webStorage in window && window[webStorage] !== null;
-    } catch (error) {
+    } catch (_error) {
       return false;
     }
   };
