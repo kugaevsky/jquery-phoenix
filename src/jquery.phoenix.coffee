@@ -98,10 +98,9 @@ FEATURES:
           @element.checked = JSON.parse savedValue
         else if @$element.is(":radio")
           @$element.prop("checked", false)
-          value = JSON.parse savedValue
-          $radioEl = $("[name='#{@element.name}'][value='#{value}']")
-          if !$radioEl.is(':checked')
-            $radioEl.prop('checked', true).click()
+          $radioEl = $("[name='#{@element.name}'][value='#{savedValue}']")
+          if !$radioEl.is(":checked")
+            $radioEl.prop("checked", true)
         else if @element.tagName is "SELECT"
           @$element.find("option").prop("selected", false)
           $.each JSON.parse(savedValue), (i, value) =>
@@ -115,9 +114,6 @@ FEATURES:
       @webStorage[@storageKeyDate] = (new Date).getTime()
       @webStorage[@storageKey] = if @$element.is(":checkbox")
         @element.checked
-      else if @$element.is(":radio")
-        selectedValue = @$element.val()
-        JSON.stringify selectedValue
       else if @element.tagName is "SELECT"
         selectedValues = $.map(@$element.find("option:selected"), (el) -> el.value)
         JSON.stringify selectedValues
