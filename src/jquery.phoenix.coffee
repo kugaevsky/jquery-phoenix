@@ -89,7 +89,7 @@ FEATURES:
           @$element.find("option").prop("selected", false)
           $.each JSON.parse(savedValue), (i, value) =>
             @$element.find('option').filter(
-              (value) -> @value == $(this).val()
+              -> value == $(this).val()
             ).prop("selected", true)
         else
           @element.value = savedValue
