@@ -28,7 +28,7 @@
   },
   "homepage": "https://github.com/kugaevsky/jquery-phoenix",
   "devDependencies": {
-    "eslint": "^0.6.2",
+    "eslint": "^6.6.0",
     "gulp": "^3.6.2",
     "gulp-coffee": "^1.4.3",
     "gulp-eslint": "^0.1.7",
