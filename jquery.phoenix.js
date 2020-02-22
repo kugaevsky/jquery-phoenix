@@ -35,14 +35,17 @@ FEATURES:
     webStorage: "localStorage",
     maxItems: 100,
     saveInterval: 1000,
+    expireTime: false,
     clearOnSubmit: false,
     saveOnChange: false,
+    saveOnInput: false,
+    ignoreUri: false,
     keyAttributes: ["tagName", "id", "name"]
   };
   saveTimers = [];
   Phoenix = (function() {
     function Phoenix(element, option) {
-      var attr, storageArray;
+      var attr, storageArray, _ref;
       this.element = element;
       this._defaults = defaults;
       this._name = pluginName;
@@ -50,19 +53,24 @@ FEATURES:
       this.options = $.extend({}, defaults, (typeof option === "object" ? option : void 0));
       if (typeof option === "string") {
         this.action = option;
+      } else if (this.options.action != null) {
+        this.action = this.options.action;
       }
-      this.uri = window.location.host + window.location.pathname;
+      this.uri = (_ref = this.options.ignoreUri) != null ? _ref : {
+        '': window.location.host + window.location.pathname
+      };
       storageArray = [this.options.namespace, this.uri].concat((function() {
-        var _i, _len, _ref, _results;
-        _ref = this.options.keyAttributes;
+        var _i, _len, _ref1, _results;
+        _ref1 = this.options.keyAttributes;
         _results = [];
-        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-          attr = _ref[_i];
+        for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
+          attr = _ref1[_i];
           _results.push(this.element[attr]);
         }
         return _results;
       }).call(this));
       this.storageKey = storageArray.join(".");
+      this.storageKeyDate = "savedDate." + storageArray.join(".");
       this.storageIndexKey = [this.options.namespace, "index", window.location.host].join(".");
       this.webStorage = window[this.options.webStorage];
       this.init();
@@ -76,6 +84,7 @@ FEATURES:
       var e, indexedItems;
       this.stop();
       this.webStorage.removeItem(this.storageKey);
+      this.webStorage.removeItem(this.storageKeyDate);
       e = $.Event("phnx.removed");
       this.$element.trigger(e);
       indexedItems = this.indexedItems();
@@ -97,11 +106,21 @@ FEATURES:
     };
 
     Phoenix.prototype.load = function() {
-      var e, savedValue;
+      var $radioEl, e, savedDate, savedValue;
+      savedDate = this.webStorage[this.storageKeyDate];
+      if (this.options.expireTime && parseInt(savedDate) + parseInt(this.options.expireTime) < (new Date).getTime()) {
+        this.remove();
+      }
       savedValue = this.webStorage[this.storageKey];
       if (savedValue != null) {
-        if (this.$element.is(":checkbox, :radio")) {
+        if (this.$element.is(":checkbox")) {
           this.element.checked = JSON.parse(savedValue);
+        } else if (this.$element.is(":radio")) {
+          this.$element.prop("checked", false);
+          $radioEl = $("[name='" + this.element.name + "'][value='" + savedValue + "']");
+          if (!$radioEl.is(":checked")) {
+            $radioEl.prop("checked", true);
+          }
         } else if (this.element.tagName === "SELECT") {
           this.$element.find("option").prop("selected", false);
           $.each(JSON.parse(savedValue), (function(_this) {
@@ -119,7 +138,8 @@ FEATURES:
 
     Phoenix.prototype.save = function() {
       var e, selectedValues;
-      this.webStorage[this.storageKey] = this.$element.is(":checkbox, :radio") ? this.element.checked : this.element.tagName === "SELECT" ? (selectedValues = $.map(this.$element.find("option:selected"), function(el) {
+      this.webStorage[this.storageKeyDate] = (new Date).getTime();
+      this.webStorage[this.storageKey] = this.$element.is(":checkbox") ? this.element.checked : this.element.tagName === "SELECT" ? (selectedValues = $.map(this.$element.find("option:selected"), function(el) {
         return el.value;
       }), JSON.stringify(selectedValues)) : this.element.value;
       e = $.Event("phnx.saved");
@@ -174,6 +194,13 @@ FEATURES:
             $(this.options.clearOnSubmit).submit((function(_this) {
               return function() {
                 return _this.remove();
+              };
+            })(this));
+          }
+          if (this.options.saveOnInput) {
+            $(this.element).on("input", (function(_this) {
+              return function() {
+                return _this.save();
               };
             })(this));
           }

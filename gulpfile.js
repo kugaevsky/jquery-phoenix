@@ -15,7 +15,7 @@ gulp.task('coffee', function () {
 			browser: true
 		}
 	}))
-	.pipe(plugins.eslint.format())
+	// .pipe(plugins.eslint.format())
 	.pipe(plugins.size());
 });
 

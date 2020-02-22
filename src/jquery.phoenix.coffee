@@ -37,8 +37,11 @@ FEATURES:
     webStorage: "localStorage"
     maxItems: 100
     saveInterval: 1000
+    expireTime: false
     clearOnSubmit: false
     saveOnChange: false
+    saveOnInput: false
+    ignoreUri: false
     keyAttributes: ["tagName", "id", "name"]
   saveTimers = []
 
@@ -49,10 +52,14 @@ FEATURES:
 
       @$element     = $(@element)
       @options      = $.extend {}, defaults, (option if typeof option is "object")
-      @action       = option if typeof option is "string"
-      @uri          = window.location.host + window.location.pathname
+      if typeof option is "string"
+        @action       = option
+      else if this.options.action?
+        @action       = this.options.action
+      @uri          = @options.ignoreUri ? '' : (window.location.host + window.location.pathname)
       storageArray  = [ @options.namespace, @uri ].concat (@element[attr] for attr in @options.keyAttributes)
       @storageKey   = storageArray.join "."
+      @storageKeyDate  = "savedDate." + storageArray.join "."
       @storageIndexKey = [ @options.namespace, "index", window.location.host ].join(".")
       @webStorage = window[@options.webStorage]
 
@@ -63,6 +70,7 @@ FEATURES:
     remove: ->
       @stop()
       @webStorage.removeItem @storageKey
+      @webStorage.removeItem @storageKeyDate
       e = $.Event("phnx.removed")
       @$element.trigger(e)
       indexedItems = @indexedItems()
@@ -81,10 +89,18 @@ FEATURES:
       return
 
     load: ->
+      savedDate = @webStorage[@storageKeyDate]
+      if @options.expireTime and parseInt(savedDate) + parseInt(@options.expireTime) < (new Date).getTime()
+        @remove()
       savedValue = @webStorage[@storageKey]
       if savedValue?
-        if @$element.is(":checkbox, :radio")
+        if @$element.is(":checkbox")
           @element.checked = JSON.parse savedValue
+        else if @$element.is(":radio")
+          @$element.prop("checked", false)
+          $radioEl = $("[name='#{@element.name}'][value='#{savedValue}']")
+          if !$radioEl.is(":checked")
+            $radioEl.prop("checked", true)
         else if @element.tagName is "SELECT"
           @$element.find("option").prop("selected", false)
           $.each JSON.parse(savedValue), (i, value) =>
@@ -97,7 +113,8 @@ FEATURES:
         @$element.trigger(e)
 
     save: ->
-      @webStorage[@storageKey] = if @$element.is(":checkbox, :radio")
+      @webStorage[@storageKeyDate] = (new Date).getTime()
+      @webStorage[@storageKey] = if @$element.is(":checkbox")
         @element.checked
       else if @element.tagName is "SELECT"
         selectedValues = $.map(@$element.find("option:selected"), (el) -> el.value)
@@ -131,6 +148,7 @@ FEATURES:
           @load()
           @start()
           $(@options.clearOnSubmit).submit(=> @remove()) if @options.clearOnSubmit
+          $(@element).on("input",() => @save()) if @options.saveOnInput
           $(@element).change(() => @save()) if @options.saveOnChange
 
   supportsHtml5Storage = (webStorage) ->
