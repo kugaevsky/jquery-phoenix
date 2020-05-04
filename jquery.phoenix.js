@@ -35,8 +35,10 @@ FEATURES:
     webStorage: "localStorage",
     maxItems: 100,
     saveInterval: 1000,
+    expireTime: false,
     clearOnSubmit: false,
     saveOnChange: false,
+    saveOnInput: false,
     keyAttributes: ["tagName", "id", "name"]
   };
   saveTimers = [];
@@ -50,19 +52,22 @@ FEATURES:
       this.options = $.extend({}, defaults, (typeof option === "object" ? option : void 0));
       if (typeof option === "string") {
         this.action = option;
+      } else if (this.options.action != null) {
+        this.action = this.options.action;
       }
       this.uri = window.location.host + window.location.pathname;
       storageArray = [this.options.namespace, this.uri].concat((function() {
-        var _i, _len, _ref, _results;
-        _ref = this.options.keyAttributes;
-        _results = [];
-        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-          attr = _ref[_i];
-          _results.push(this.element[attr]);
+        var j, len, ref, results;
+        ref = this.options.keyAttributes;
+        results = [];
+        for (j = 0, len = ref.length; j < len; j++) {
+          attr = ref[j];
+          results.push(this.element[attr]);
         }
-        return _results;
+        return results;
       }).call(this));
       this.storageKey = storageArray.join(".");
+      this.storageKeyDate = "savedDate." + storageArray.join(".");
       this.storageIndexKey = [this.options.namespace, "index", window.location.host].join(".");
       this.webStorage = window[this.options.webStorage];
       this.init();
@@ -76,6 +81,7 @@ FEATURES:
       var e, indexedItems;
       this.stop();
       this.webStorage.removeItem(this.storageKey);
+      this.webStorage.removeItem(this.storageKeyDate);
       e = $.Event("phnx.removed");
       this.$element.trigger(e);
       indexedItems = this.indexedItems();
@@ -97,7 +103,11 @@ FEATURES:
     };
 
     Phoenix.prototype.load = function() {
-      var e, savedValue;
+      var e, savedDate, savedValue;
+      savedDate = this.webStorage[this.storageKeyDate];
+      if (this.options.expireTime && parseInt(savedDate) + parseInt(this.options.expireTime) < (new Date).getTime()) {
+        this.remove();
+      }
       savedValue = this.webStorage[this.storageKey];
       if (savedValue != null) {
         if (this.$element.is(":checkbox, :radio")) {
@@ -119,6 +129,7 @@ FEATURES:
 
     Phoenix.prototype.save = function() {
       var e, selectedValues;
+      this.webStorage[this.storageKeyDate] = (new Date).getTime();
       this.webStorage[this.storageKey] = this.$element.is(":checkbox, :radio") ? this.element.checked : this.element.tagName === "SELECT" ? (selectedValues = $.map(this.$element.find("option:selected"), function(el) {
         return el.value;
       }), JSON.stringify(selectedValues)) : this.element.value;
@@ -177,6 +188,13 @@ FEATURES:
               };
             })(this));
           }
+          if (this.options.saveOnInput) {
+            $(this.element).on("input", (function(_this) {
+              return function() {
+                return _this.save();
+              };
+            })(this));
+          }
           if (this.options.saveOnChange) {
             return $(this.element).change((function(_this) {
               return function() {
@@ -191,9 +209,10 @@ FEATURES:
 
   })();
   supportsHtml5Storage = function(webStorage) {
+    var error;
     try {
       return webStorage in window && window[webStorage] !== null;
-    } catch (_error) {
+    } catch (error) {
       return false;
     }
   };
